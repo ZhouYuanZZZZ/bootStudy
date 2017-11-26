@@ -24,9 +24,10 @@ public class BootstudyApplication {
 		SpringApplication.run(BootstudyApplication.class, args);
 	}
 
+
 	@RequestMapping("helloWorld")
 	public String helloWorld() {
 		logger.info("hello world:{}",propertiesTest.getName());
-		return "hello world";
+		return "hello world xxxx";
 	}
 }
