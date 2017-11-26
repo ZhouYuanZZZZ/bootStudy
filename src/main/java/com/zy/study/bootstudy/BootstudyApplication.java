@@ -28,6 +28,6 @@ public class BootstudyApplication {
 	@RequestMapping("helloWorld")
 	public String helloWorld() {
 		logger.info("hello world:{}",propertiesTest.getName());
-		return "hello world xxxx";
+		return "hello world xxxxxx";
 	}
 }
