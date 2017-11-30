@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
@@ -45,5 +48,18 @@ public class BootstudyApplication {
 		outputStream.close();
 
 		return "sucess";
+	}
+
+	@RequestMapping("freeMaker")
+	public String freeMaker(Map<String,Object> map) throws IOException {
+		List<String> list = new ArrayList<>();
+		for (int i = 0; i <10 ; i++) {
+			list.add(i+"");
+		}
+
+		map.put("user","zzzz");
+		map.put("listName",list);
+
+		return "a";
 	}
 }
