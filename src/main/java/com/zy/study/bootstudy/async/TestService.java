@@ -10,7 +10,7 @@ public class TestService {
 
     private static final Logger logger = LoggerFactory.getLogger(TestService.class);
 
-    @Async
+    //@Async
     public void test(){
         for (int i = 0; i < 100; i++) {
           logger.info(i+"");

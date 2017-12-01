@@ -14,7 +14,7 @@ public class Test0Bean {
     @Resource
     private TestService testService;
 
-    @PostConstruct
+    //@PostConstruct
     public void init(){
         logger.info("init");
         for (int i = 0; i <10 ; i++) {
