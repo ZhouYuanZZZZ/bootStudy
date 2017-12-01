@@ -53,7 +53,7 @@ public class BootstudyApplication {
 	@RequestMapping("freeMaker")
 	public String freeMaker(Map<String,Object> map) throws IOException {
 		List<String> list = new ArrayList<>();
-		for (int i = 0; i <10 ; i++) {
+		for (int i = 0; i <3 ; i++) {
 			list.add(i+"");
 		}
 
