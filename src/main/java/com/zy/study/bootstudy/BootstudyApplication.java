@@ -1,6 +1,9 @@
 package com.zy.study.bootstudy;
 
 import com.sun.deploy.net.HttpResponse;
+import com.zy.study.bootstudy.entity.City;
+import com.zy.study.bootstudy.entity.CityExample;
+import com.zy.study.bootstudy.mapper.CityMapper;
 import com.zy.study.bootstudy.properties.PropertiesTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -28,6 +32,9 @@ public class BootstudyApplication {
 
 	@Resource
 	private PropertiesTest propertiesTest;
+
+	@Resource
+	private CityMapper cityMapper;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BootstudyApplication.class, args);
@@ -61,5 +68,17 @@ public class BootstudyApplication {
 		map.put("listName",list);
 
 		return "a";
+	}
+
+	@RequestMapping(value = "city",produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<City> queryCity(){
+
+		List<City> cities = cityMapper.selectByExample(null);
+		City city = cities.get(0);
+		city.setId(null);
+
+		List<City> cities1 = cities.subList(0, 9);
+		return cities1;
 	}
 }

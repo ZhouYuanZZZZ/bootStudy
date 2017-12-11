@@ -17,7 +17,7 @@ public class Test0Bean {
     //@PostConstruct
     public void init(){
         logger.info("init");
-        for (int i = 0; i <10 ; i++) {
+        for (int i = 0; i <100 ; i++) {
             testService.test();
         }
     }
