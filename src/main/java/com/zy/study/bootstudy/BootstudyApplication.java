@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,12 +38,15 @@ public class BootstudyApplication {
 	@Resource
 	private CityMapper cityMapper;
 
+	@Resource
+	private JdbcTemplate jdbcTemplate;
+
 	public static void main(String[] args) {
 		SpringApplication.run(BootstudyApplication.class, args);
 	}
 
 
-	@RequestMapping("helloWorld")
+	@RequestMapping("testFileDownload")
 	public String helloWorld(HttpServletResponse response) throws IOException {
 
 		byte[] data = new byte[]{0b00000001};
