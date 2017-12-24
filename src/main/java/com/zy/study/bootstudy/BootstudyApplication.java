@@ -5,6 +5,7 @@ import com.zy.study.bootstudy.entity.City;
 import com.zy.study.bootstudy.entity.CityExample;
 import com.zy.study.bootstudy.mapper.CityMapper;
 import com.zy.study.bootstudy.properties.PropertiesTest;
+import com.zy.study.bootstudy.services.CityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -41,10 +42,20 @@ public class BootstudyApplication {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 
+	@Resource
+	private CityService cityService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(BootstudyApplication.class, args);
 	}
 
+	@RequestMapping("testUpdate")
+	public String testUpdate() {
+
+		cityService.modifyCity();
+
+		return "ok";
+	}
 
 	@RequestMapping("testFileDownload")
 	public String helloWorld(HttpServletResponse response) throws IOException {

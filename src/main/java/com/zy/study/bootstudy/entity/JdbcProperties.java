@@ -1,5 +1,6 @@
 package com.zy.study.bootstudy.entity;
 
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +12,7 @@ public class JdbcProperties {
     private String url;
     private String username;
     private String password;
-    private String mybatisConfigLocationLocation;
-    private String mapperScannerConfigurerBasePackage;
+
 
     public String getDriverClassName() {
         return driverClassName;
@@ -46,19 +46,4 @@ public class JdbcProperties {
         this.password = password;
     }
 
-    public String getMybatisConfigLocationLocation() {
-        return mybatisConfigLocationLocation;
-    }
-
-    public void setMybatisConfigLocationLocation(String mybatisConfigLocationLocation) {
-        this.mybatisConfigLocationLocation = mybatisConfigLocationLocation;
-    }
-
-    public String getMapperScannerConfigurerBasePackage() {
-        return mapperScannerConfigurerBasePackage;
-    }
-
-    public void setMapperScannerConfigurerBasePackage(String mapperScannerConfigurerBasePackage) {
-        this.mapperScannerConfigurerBasePackage = mapperScannerConfigurerBasePackage;
-    }
 }
