@@ -52,9 +52,9 @@ public class BootstudyApplication {
 	@RequestMapping("testUpdate")
 	public String testUpdate() {
 
-		cityService.modifyCity();
-
-		return "ok";
+		//cityService.modifyCity();
+		throw new RuntimeException();
+		//return "ok";
 	}
 
 	@RequestMapping("testFileDownload")
