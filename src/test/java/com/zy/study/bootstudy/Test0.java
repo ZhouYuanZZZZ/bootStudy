@@ -24,6 +24,15 @@ public class Test0 {
             int number = (int) (Math.random() * (100 - 50 + 1)) + 25;
             System.out.println(number);
         }
-
     }
+
+    @Test
+    public void test2(){
+        BigDecimal a1 = new BigDecimal(1.00);
+        BigDecimal a2 = new BigDecimal(1);
+
+        System.out.println(a1.equals(a2));
+        System.out.println(a1.compareTo(a2));
+    }
+
 }

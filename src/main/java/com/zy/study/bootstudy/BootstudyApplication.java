@@ -1,5 +1,6 @@
 package com.zy.study.bootstudy;
 
+import com.alibaba.fastjson.JSON;
 import com.sun.deploy.net.HttpResponse;
 import com.zy.study.bootstudy.entity.City;
 import com.zy.study.bootstudy.entity.CityExample;
@@ -11,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
+@EnableDiscoveryClient
 @Controller
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class BootstudyApplication {
@@ -45,8 +50,17 @@ public class BootstudyApplication {
 	@Resource
 	private CityService cityService;
 
+	@Resource
+	private DiscoveryClient discoveryClient;
+
 	public static void main(String[] args) {
 		SpringApplication.run(BootstudyApplication.class, args);
+	}
+
+	@ResponseBody
+	@RequestMapping(value="testEurake",produces ="application/json;charset=UTF-8")
+	public String testEurake(){
+		return JSON.toJSONString(discoveryClient);
 	}
 
 	@RequestMapping("testUpdate")
