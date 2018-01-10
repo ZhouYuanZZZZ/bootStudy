@@ -49,19 +49,26 @@
     window.onload = function () {
 
         $(".first")[0].addEventListener('click',handlerDiv0,false);
-        $(".second").mousemove(showMouse);
-
+        $(".second").mousemove(function () {
+            var aaaaa = 3;
+        });
         $(".first")[0].addEventListener('mousemove',showMouse,false);
+
+        var person = new Person('will', 23);
+        console.log(person);
+        console.log(person.__proto__ === Person.prototype);
+
     }
 
     function handlerDiv0() {
 
       var event = arguments[0];
     }
+
     function handlerDiv1() {
-        debugger;
         var event = arguments[0];
     }
+
     function handlerDiv2() {
         alert('handlerDiv2');
     }
@@ -70,5 +77,10 @@
 
         var event = arguments[0];
         console.log(event.screenX+':'+event.screenY);
+    }
+
+    function Person(name, age){
+        this.name = name;
+        this.age = age;
     }
 </script>
