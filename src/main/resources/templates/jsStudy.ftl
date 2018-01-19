@@ -44,7 +44,7 @@
 
 </body>
 </html>
-<script src="common/jquery-3.2.1.js"></script>
+
 <script>
     window.onload = function () {
 

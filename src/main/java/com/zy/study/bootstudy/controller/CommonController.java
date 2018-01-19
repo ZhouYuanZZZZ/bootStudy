@@ -20,4 +20,9 @@ public class CommonController {
 
         return "jsStudy";
     }
+
+    @RequestMapping(value = "bootstrapTable")
+    public String bootStrapTableStudy(){
+        return "bootstrapTable";
+    }
 }
