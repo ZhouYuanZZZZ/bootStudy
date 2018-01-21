@@ -105,10 +105,7 @@ public class BootstudyApplication {
 	public List<City> queryCity(){
 
 		List<City> cities = cityMapper.selectByExample(null);
-		City city = cities.get(0);
-		city.setId(null);
 
-		List<City> cities1 = cities.subList(0, 9);
-		return cities1;
+		return cities;
 	}
 }

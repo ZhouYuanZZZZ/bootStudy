@@ -23,6 +23,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
         var data = [
             {
                 "name": "bootstrap-table",
