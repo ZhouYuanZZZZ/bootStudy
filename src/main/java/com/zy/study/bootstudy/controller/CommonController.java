@@ -25,4 +25,9 @@ public class CommonController {
     public String bootStrapTableStudy(){
         return "bootstrapTable";
     }
+
+    @RequestMapping(value = "formSerialize")
+    public String formSerialize(){
+        return "formSerialize";
+    }
 }
