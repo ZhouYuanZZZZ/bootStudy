@@ -5,6 +5,7 @@ import com.sun.deploy.net.HttpResponse;
 import com.zy.study.bootstudy.entity.City;
 import com.zy.study.bootstudy.entity.CityExample;
 import com.zy.study.bootstudy.mapper.CityMapper;
+import com.zy.study.bootstudy.mapper.CityMapper1;
 import com.zy.study.bootstudy.properties.PropertiesTest;
 import com.zy.study.bootstudy.services.CityService;
 import org.slf4j.Logger;
@@ -43,6 +44,9 @@ public class BootstudyApplication {
 
 	@Resource
 	private CityMapper cityMapper;
+
+	@Resource
+	private CityMapper1 cityMapper1;
 
 	@Resource
 	private JdbcTemplate jdbcTemplate;
@@ -107,5 +111,15 @@ public class BootstudyApplication {
 		List<City> cities = cityMapper.selectByExample(null);
 
 		return cities;
+	}
+
+	@RequestMapping(value = "city1",produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public List<City> queryCity1(){
+
+		List<City> cities1 = cityMapper1.selectList(null);
+
+
+		return cities1;
 	}
 }
