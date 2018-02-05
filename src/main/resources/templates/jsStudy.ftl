@@ -48,16 +48,13 @@
 <script>
     window.onload = function () {
 
-        $(".first")[0].addEventListener('click',handlerDiv0,false);
+        $(".first")[0].addEventListener('click', handlerDiv0, false);
         $(".second").mousemove(function () {
             var aaaaa = 3;
         });
-        $(".first")[0].addEventListener('mousemove',showMouse,false);
+        $(".first")[0].addEventListener('mousemove', showMouse, false);
 
         var person = new Person('will', 23);
-        console.log(person);
-        console.log(person.__proto__ === Person.prototype);
-
     }
 
     function handlerDiv0() {
@@ -74,13 +71,18 @@
     }
 
     function showMouse() {
-
         var event = arguments[0];
-        console.log(event.screenX+':'+event.screenY);
     }
 
     function Person(name, age){
         this.name = name;
         this.age = age;
     }
+
+    $(document).ready(function () {
+        var reg1 = new RegExp('\w')
+        var reg2 = /\w/;
+        var s = 'e';
+
+    });
 </script>

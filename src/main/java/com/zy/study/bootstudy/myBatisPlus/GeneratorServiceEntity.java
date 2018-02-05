@@ -21,19 +21,19 @@ public class GeneratorServiceEntity {
 
     @Test
     public void generateCode() {
-        String packageName = "com.baomidou.springboot";
+        String packageName = "com.zy.study.bootstudy";
         boolean serviceNameStartWithI = false;//user -> UserService, 设置成true: user -> IUserService
-        generateByTables(serviceNameStartWithI, packageName, "user", "role");
+        generateByTables(serviceNameStartWithI, packageName, "city");
     }
 
     private void generateByTables(boolean serviceNameStartWithI, String packageName, String... tableNames) {
         GlobalConfig config = new GlobalConfig();
-        String dbUrl = "jdbc:mysql://localhost:3306/mybatis-plus";
+        String dbUrl = "jdbc:mysql://localhost:3306/world";
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL)
                 .setUrl(dbUrl)
                 .setUsername("root")
-                .setPassword("")
+                .setPassword("081115")
                 .setDriverName("com.mysql.jdbc.Driver");
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
@@ -43,8 +43,8 @@ public class GeneratorServiceEntity {
                 .setNaming(NamingStrategy.underline_to_camel)
                 .setInclude(tableNames);//修改替换成你需要的表名，多个表名传数组
         config.setActiveRecord(false)
-                .setAuthor("K神带你飞")
-                .setOutputDir("d:\\codeGen")
+                .setAuthor("will")
+                .setOutputDir("e:\\codeGen")
                 .setFileOverride(true);
         if (!serviceNameStartWithI) {
             config.setServiceName("%sService");

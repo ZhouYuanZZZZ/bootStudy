@@ -106,20 +106,27 @@ public class BootstudyApplication {
 
 	@RequestMapping(value = "city",produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public List<City> queryCity(){
+	public List<City> queryCity() {
+		try {
+			List<City> cities = cityMapper.selectByExample(null);
+			return cities;
+		} catch (Exception e) {
+			logger.error("error", e);
+			return null;
+		}
 
-		List<City> cities = cityMapper.selectByExample(null);
-
-		return cities;
 	}
 
 	@RequestMapping(value = "city1",produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public List<City> queryCity1(){
+	public List<com.zy.study.bootstudy.myBatisPlus.City> queryCity1(){
 
-		List<City> cities1 = cityMapper1.selectList(null);
-
-
-		return cities1;
+		try {
+			List<com.zy.study.bootstudy.myBatisPlus.City> cities = cityMapper1.selectList(null);
+			return cities;
+		} catch (Exception e) {
+			logger.error("error", e);
+			return null;
+		}
 	}
 }
