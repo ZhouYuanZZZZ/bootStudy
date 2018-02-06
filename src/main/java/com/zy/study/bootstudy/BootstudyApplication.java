@@ -1,6 +1,9 @@
 package com.zy.study.bootstudy;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.sun.deploy.net.HttpResponse;
 import com.zy.study.bootstudy.entity.City;
 import com.zy.study.bootstudy.entity.CityExample;
@@ -122,7 +125,10 @@ public class BootstudyApplication {
 	public List<com.zy.study.bootstudy.myBatisPlus.City> queryCity1(){
 
 		try {
-			List<com.zy.study.bootstudy.myBatisPlus.City> cities = cityMapper1.selectList(null);
+			EntityWrapper<com.zy.study.bootstudy.myBatisPlus.City> ew = new EntityWrapper<com.zy.study.bootstudy.myBatisPlus.City>();
+			ew.where("Population<{0}",1000);
+			ew.and("CountryCode={0}","AFG");
+			List<com.zy.study.bootstudy.myBatisPlus.City> cities = cityMapper1.selectList(ew);
 			return cities;
 		} catch (Exception e) {
 			logger.error("error", e);
