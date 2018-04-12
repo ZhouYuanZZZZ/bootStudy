@@ -15,7 +15,7 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 @EnableScheduling
-@Import(value = {MVCConfig.class,Odm.class})
+@Import(value = {MVCConfig.class,Odm.class,AsyConfigurer.class})
 public class ApplicationContext {
 
     @Bean
@@ -23,17 +23,6 @@ public class ApplicationContext {
         Test0Bean test0Bean = new Test0Bean();
         return test0Bean;
     }
-
-    @Bean
-    public Executor asyncExecutor() {
-        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setCorePoolSize(5);//线程池维护线程的最少数量
-        taskExecutor.setMaxPoolSize(10);//线程池维护线程的最大数量
-        taskExecutor.setQueueCapacity(25);//线程池所使用的缓冲队列
-        taskExecutor.initialize();
-        return taskExecutor;
-    }
-
 
 
 }

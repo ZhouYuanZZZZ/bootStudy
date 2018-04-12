@@ -1,10 +1,13 @@
 package com.zy.study.bootstudy;
 
 import com.zy.study.bootstudy.aspect.AspectService;
+import com.zy.study.bootstudy.async.TestService;
 import com.zy.study.bootstudy.entity.City;
 import com.zy.study.bootstudy.mapper.CityMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -15,11 +18,16 @@ import java.util.List;
 @SpringBootTest
 public class BootstudyApplicationTests {
 
+	private static final Logger logger = LoggerFactory.getLogger(BootstudyApplicationTests.class);
+
 	@Resource
 	private CityMapper cityMapper;
 
 	@Resource
 	private AspectService aspectService;
+
+	@Resource
+	private TestService testService;
 
 	@Test
 	public void contextLoads() {
@@ -45,6 +53,13 @@ public class BootstudyApplicationTests {
 	@Test
 	public void testAop04(){
 		aspectService.testAop04("zzz");
+	}
+
+	@Test
+	public void testAsy01(){
+		logger.info("--------------------------");
+		testService.test();
+		logger.info("--------------------------");
 	}
 
 }
