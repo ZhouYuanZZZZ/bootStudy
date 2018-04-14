@@ -14,6 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class CommonController {
 
+    @RequestMapping("loginPage")
+    public String loginPage() {
+
+        return "loginPage";
+    }
+
+    @RequestMapping("list")
+    public String list() {
+
+        return "list";
+    }
+
     @RequestMapping(value = "jsStudy")
     public String jsStudy(HttpServletRequest request){
         RequestContext requestContext = new RequestContext(request);

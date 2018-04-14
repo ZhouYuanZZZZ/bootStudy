@@ -8,5 +8,6 @@
 
 <script type="text/javascript">
 
+    var appRoot = '${ctx.contextPath}';
 
 </script>

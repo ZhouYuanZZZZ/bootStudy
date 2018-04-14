@@ -15,7 +15,7 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 @EnableScheduling
-@Import(value = {MVCConfig.class,Odm.class})
+@Import(value = {MVCConfig.class,Odm.class,WebConfig.class,ShiroConfig.class})
 public class ApplicationContext {
 
     @Bean
