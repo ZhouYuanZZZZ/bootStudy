@@ -18,7 +18,7 @@ public class ScheduleTaskService {
         logger.info(new Date().toString());
     }
 
-    @Scheduled(cron = "*/5 * * * * ?")
+    //@Scheduled(cron = "*/5 * * * * ?")
     public void test1() {
         logger.info(new Date().toString());
     }

@@ -1,6 +1,6 @@
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Insert title here</title>
 </head>
 <body>
@@ -10,10 +10,13 @@
 Welcome: <shiro:principal></shiro:principal>
 
 <br><br>
-<a href="shiro/testShiroAnnotation">Test ShiroAnnotation</a>
+<a href="${ctx.contextPath}/user">user</a>
 
 <br><br>
-<a href="shiro/logout">Logout</a>
+<a href="${ctx.contextPath}/admin">admin</a>
+
+<br><br>
+<a href="${ctx.contextPath}/logout">Logout</a>
 
 </body>
 </html>

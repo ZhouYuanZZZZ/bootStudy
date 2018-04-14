@@ -1,6 +1,8 @@
 package com.zy.study.bootstudy.config;
 
 import com.zy.study.bootstudy.shrio.JdbcRealm;
+import com.zy.study.bootstudy.shrio.SecondRealm;
+import org.apache.shiro.authc.pam.AllSuccessfulStrategy;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.mgt.RememberMeManager;
@@ -27,12 +29,13 @@ public class ShiroConfig {
 
 
     @Bean
-    public DefaultWebSecurityManager securityManager(ModularRealmAuthenticator authenticator, JdbcRealm jdbcRealm){
+    public DefaultWebSecurityManager securityManager(ModularRealmAuthenticator authenticator, JdbcRealm jdbcRealm, SecondRealm secondRealm){
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setAuthenticator(authenticator);
 
         List<Realm> realms = new ArrayList<>();
         realms.add(jdbcRealm);
+        realms.add(secondRealm);
         defaultWebSecurityManager.setRealms(realms);
 
         CookieRememberMeManager rememberMeManager = (CookieRememberMeManager)defaultWebSecurityManager.getRememberMeManager();
@@ -47,9 +50,12 @@ public class ShiroConfig {
     public ModularRealmAuthenticator authenticator(){
 
         ModularRealmAuthenticator modularRealmAuthenticator = new ModularRealmAuthenticator();
-        AtLeastOneSuccessfulStrategy atLeastOneSuccessfulStrategy = new AtLeastOneSuccessfulStrategy();
 
+        AtLeastOneSuccessfulStrategy atLeastOneSuccessfulStrategy = new AtLeastOneSuccessfulStrategy();
         modularRealmAuthenticator.setAuthenticationStrategy(atLeastOneSuccessfulStrategy);
+
+//        AllSuccessfulStrategy allSuccessfulStrategy = new AllSuccessfulStrategy();
+//        modularRealmAuthenticator.setAuthenticationStrategy(allSuccessfulStrategy);
 
         return modularRealmAuthenticator;
     }
@@ -85,13 +91,19 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setLoginUrl("/loginPage");
         shiroFilterFactoryBean.setSuccessUrl("/list");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
 
         Map<String,String> map = new HashMap<>();
         map.put("/loginPage", "anon");
         map.put("/login", "anon");
+        map.put("/logout", "logout");
+        map.put("/user", "roles[user]");
+        map.put("/admin", "roles[admin]");
         map.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }
+
+
 
 }
