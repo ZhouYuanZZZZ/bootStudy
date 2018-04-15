@@ -2,11 +2,15 @@ package com.zy.study.bootstudy.config;
 
 import com.zy.study.bootstudy.shrio.JdbcRealm;
 import com.zy.study.bootstudy.shrio.SecondRealm;
+import com.zy.study.bootstudy.shrio.SessionDao;
 import org.apache.shiro.authc.pam.AllSuccessfulStrategy;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.DefaultSessionManager;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -14,6 +18,7 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.Cookie;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,9 +34,18 @@ public class ShiroConfig {
 
 
     @Bean
-    public DefaultWebSecurityManager securityManager(ModularRealmAuthenticator authenticator, JdbcRealm jdbcRealm, SecondRealm secondRealm){
+    public DefaultWebSecurityManager securityManager(ModularRealmAuthenticator authenticator,
+                                                     JdbcRealm jdbcRealm,
+                                                     SecondRealm secondRealm,
+                                                     DefaultSessionManager sessionManager,
+                                                     CookieRememberMeManager cookieRememberMeManager,
+                                                     CacheManager redisCacheManager){
+
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setAuthenticator(authenticator);
+        //defaultWebSecurityManager.setSessionManager(sessionManager);
+        defaultWebSecurityManager.setRememberMeManager(cookieRememberMeManager);
+        defaultWebSecurityManager.setCacheManager(redisCacheManager);
 
         List<Realm> realms = new ArrayList<>();
         realms.add(jdbcRealm);
@@ -102,6 +116,42 @@ public class ShiroConfig {
         map.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
+    }
+
+    //配置sessionId生成器
+    @Bean
+    public JavaUuidSessionIdGenerator sessionIdGenerator(){
+        return new JavaUuidSessionIdGenerator();
+    }
+
+    //sessionManager
+    @Bean
+    public DefaultSessionManager sessionManager(SessionDao sessionDao){
+
+        DefaultSessionManager defaultSessionManager = new DefaultSessionManager();
+        defaultSessionManager.setDeleteInvalidSessions(true);
+        defaultSessionManager.setSessionDAO(sessionDao);
+        defaultSessionManager.setGlobalSessionTimeout(180*1000);
+        defaultSessionManager.setDeleteInvalidSessions(true);
+
+        return defaultSessionManager;
+    }
+
+    @Bean
+    public SimpleCookie rememberCookie(){
+
+        SimpleCookie simpleCookie = new SimpleCookie();
+        simpleCookie.setMaxAge(3600*24);
+
+        return simpleCookie;
+    }
+
+    @Bean
+    public CookieRememberMeManager cookieRememberMeManager(SimpleCookie simpleCookie){
+
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(simpleCookie);
+        return cookieRememberMeManager;
     }
 
 

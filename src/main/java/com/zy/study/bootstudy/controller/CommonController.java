@@ -14,35 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class CommonController {
 
-    @RequestMapping("unauthorized")
-    public String unauthorized() {
 
-        return "shiro/unauthorized";
-    }
-
-    @RequestMapping("user")
-    public String user() {
-
-        return "shiro/user";
-    }
-
-    @RequestMapping("admin")
-    public String admin() {
-
-        return "shiro/admin";
-    }
-
-    @RequestMapping("loginPage")
-    public String loginPage() {
-
-        return "loginPage";
-    }
-
-    @RequestMapping("list")
-    public String list() {
-
-        return "list";
-    }
 
     @RequestMapping(value = "jsStudy")
     public String jsStudy(HttpServletRequest request){
