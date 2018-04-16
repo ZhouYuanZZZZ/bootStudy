@@ -24,6 +24,9 @@ public class SecondRealm extends AuthorizingRealm {
 
         this.setCredentialsMatcher(hashedCredentialsMatcher);
 
+        super.setAuthenticationCachingEnabled(true);
+        super.setAuthorizationCachingEnabled(true);
+
     }
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {

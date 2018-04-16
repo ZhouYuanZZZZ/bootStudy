@@ -32,15 +32,15 @@ public class RedisCache<K,V> implements Cache<K,V> {
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
+            resource.select(2);
 
             byte[] bs = SerializationUtils.serialize(key);
 
             byte[] value = resource.get(bs);
 
-            if(value == null){
-                return null;
-            }
-            return SerializationUtils.deserialize(value);
+            Object deserialize = SerializationUtils.deserialize(value);
+
+            return deserialize;
         }catch (Exception e){
             logger.error("get error",e);
             return null;
@@ -55,6 +55,7 @@ public class RedisCache<K,V> implements Cache<K,V> {
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
+            resource.select(2);
 
             resource.set(SerializationUtils.serialize(key), SerializationUtils.serialize(value));
             resource.expire(SerializationUtils.serialize(key), (int) (60*60*0.5));
@@ -76,6 +77,7 @@ public class RedisCache<K,V> implements Cache<K,V> {
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
+            resource.select(2);
 
             byte[] bytes = resource.get(SerializationUtils.serialize(key));
 
@@ -96,6 +98,7 @@ public class RedisCache<K,V> implements Cache<K,V> {
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
+            resource.select(2);
 
             resource.flushDB();
 
@@ -113,6 +116,7 @@ public class RedisCache<K,V> implements Cache<K,V> {
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
+            resource.select(2);
 
             Long aLong = resource.dbSize();
 
@@ -130,6 +134,7 @@ public class RedisCache<K,V> implements Cache<K,V> {
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
+            resource.select(2);
 
             Set<byte[]> keys = resource.keys("*".getBytes());
 
@@ -153,6 +158,7 @@ public class RedisCache<K,V> implements Cache<K,V> {
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
+            resource.select(2);
 
             Set keys = this.keys();
 

@@ -1,5 +1,6 @@
 package com.zy.study.bootstudy.config;
 
+import com.zy.study.bootstudy.shrio.CustomCacheManager;
 import com.zy.study.bootstudy.shrio.JdbcRealm;
 import com.zy.study.bootstudy.shrio.SecondRealm;
 import com.zy.study.bootstudy.shrio.SessionDao;
@@ -19,6 +20,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,11 +41,11 @@ public class ShiroConfig {
                                                      SecondRealm secondRealm,
                                                      DefaultSessionManager sessionManager,
                                                      CookieRememberMeManager cookieRememberMeManager,
-                                                     CacheManager redisCacheManager){
+                                                     CustomCacheManager redisCacheManager){
 
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setAuthenticator(authenticator);
-        //defaultWebSecurityManager.setSessionManager(sessionManager);
+        defaultWebSecurityManager.setSessionManager(sessionManager);
         defaultWebSecurityManager.setRememberMeManager(cookieRememberMeManager);
         defaultWebSecurityManager.setCacheManager(redisCacheManager);
 
@@ -118,21 +120,17 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
-    //配置sessionId生成器
-    @Bean
-    public JavaUuidSessionIdGenerator sessionIdGenerator(){
-        return new JavaUuidSessionIdGenerator();
-    }
 
     //sessionManager
     @Bean
-    public DefaultSessionManager sessionManager(SessionDao sessionDao){
+    public DefaultWebSessionManager sessionManager(SessionDao sessionDao, CacheManager redisCacheManager){
 
-        DefaultSessionManager defaultSessionManager = new DefaultSessionManager();
+        DefaultWebSessionManager defaultSessionManager = new DefaultWebSessionManager();
         defaultSessionManager.setDeleteInvalidSessions(true);
         defaultSessionManager.setSessionDAO(sessionDao);
+        //defaultSessionManager.setCacheManager(redisCacheManager);
         defaultSessionManager.setGlobalSessionTimeout(180*1000);
-        defaultSessionManager.setDeleteInvalidSessions(true);
+
 
         return defaultSessionManager;
     }

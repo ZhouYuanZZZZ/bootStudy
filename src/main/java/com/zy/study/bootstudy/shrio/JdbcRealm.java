@@ -27,6 +27,7 @@ public class JdbcRealm extends AuthorizingRealm {
         hashedCredentialsMatcher.setHashIterations(666);
 
         this.setCredentialsMatcher(hashedCredentialsMatcher);
+        super.setAuthenticationCachingEnabled(true);
         super.setAuthorizationCachingEnabled(true);
 
     }
