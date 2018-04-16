@@ -37,6 +37,7 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
 
     @Override
     protected Serializable doCreate(Session session) {
+        logger.info("doCreate start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -50,6 +51,7 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
             logger.error("doCreate error", e);
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("doCreate end");
         }
 
         return session.getId();
@@ -57,6 +59,7 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
 
     @Override
     protected Session doReadSession(Serializable sessionId) {
+        logger.info("doReadSession start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -70,11 +73,13 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
             return null;
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("doReadSession end");
         }
     }
 
     @Override
     protected void doUpdate(Session session) {
+        logger.info("doUpdate start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -87,12 +92,14 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
             logger.error("doUpdate error", e);
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("doUpdate end");
         }
 
     }
 
     @Override
     protected void doDelete(Session session) {
+        logger.info("doDelete start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -104,6 +111,7 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
             logger.error("doDelete error", e);
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("doDelete end");
         }
     }
 }

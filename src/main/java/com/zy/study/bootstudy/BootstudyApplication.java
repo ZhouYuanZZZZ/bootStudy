@@ -1,14 +1,6 @@
 package com.zy.study.bootstudy;
-
-import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.sun.deploy.net.HttpResponse;
 import com.zy.study.bootstudy.entity.City;
-import com.zy.study.bootstudy.entity.CityExample;
 import com.zy.study.bootstudy.mapper.CityMapper;
-import com.zy.study.bootstudy.mapper.CityMapper1;
 import com.zy.study.bootstudy.properties.PropertiesTest;
 import com.zy.study.bootstudy.services.CityService;
 import org.slf4j.Logger;
@@ -17,13 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration;
-import org.springframework.cloud.netflix.eureka.config.EurekaDiscoveryClientConfigServiceAutoConfiguration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -47,9 +36,6 @@ public class BootstudyApplication {
 
 	@Resource
 	private CityMapper cityMapper;
-
-	@Resource
-	private CityMapper1 cityMapper1;
 
 	@Resource
 	private JdbcTemplate jdbcTemplate;
@@ -122,19 +108,4 @@ public class BootstudyApplication {
 
 	}
 
-	@RequestMapping(value = "city1",produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public List<com.zy.study.bootstudy.myBatisPlus.City> queryCity1(){
-
-		try {
-			EntityWrapper<com.zy.study.bootstudy.myBatisPlus.City> ew = new EntityWrapper<com.zy.study.bootstudy.myBatisPlus.City>();
-			ew.where("Population<{0}",1000);
-			ew.and("CountryCode={0}","AFG");
-			List<com.zy.study.bootstudy.myBatisPlus.City> cities = cityMapper1.selectList(ew);
-			return cities;
-		} catch (Exception e) {
-			logger.error("error", e);
-			return null;
-		}
-	}
 }

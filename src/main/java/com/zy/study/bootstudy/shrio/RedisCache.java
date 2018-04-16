@@ -29,6 +29,7 @@ public class RedisCache<K,V> implements Cache<K,V> {
 
     @Override
     public Object get(Object key) throws CacheException {
+        logger.info("get start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -46,12 +47,14 @@ public class RedisCache<K,V> implements Cache<K,V> {
             return null;
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("get end");
         }
 
     }
 
     @Override
     public Object put(Object key, Object value) throws CacheException {
+        logger.info("put start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -69,11 +72,13 @@ public class RedisCache<K,V> implements Cache<K,V> {
             return null;
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("put end");
         }
     }
 
     @Override
     public Object remove(Object key) throws CacheException {
+        logger.info("remove start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -90,11 +95,13 @@ public class RedisCache<K,V> implements Cache<K,V> {
 
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("remove end");
         }
     }
 
     @Override
     public void clear() throws CacheException {
+        logger.info("clear start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -108,11 +115,13 @@ public class RedisCache<K,V> implements Cache<K,V> {
 
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("clear end");
         }
     }
 
     @Override
     public int size() {
+        logger.info("size start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -126,11 +135,13 @@ public class RedisCache<K,V> implements Cache<K,V> {
             return -1;
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("size end");
         }
     }
 
     @Override
     public Set keys() {
+        logger.info("keys start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -150,11 +161,13 @@ public class RedisCache<K,V> implements Cache<K,V> {
             return null;
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("keys end");
         }
     }
 
     @Override
     public Collection values() {
+        logger.info("values start");
         Jedis resource = null;
         try {
             resource = jedisPool.getResource();
@@ -175,6 +188,7 @@ public class RedisCache<K,V> implements Cache<K,V> {
             return null;
         }finally {
             JedisPoolUtils.release(resource);
+            logger.info("values end");
         }
     }
 }

@@ -123,14 +123,12 @@ public class ShiroConfig {
 
     //sessionManager
     @Bean
-    public DefaultWebSessionManager sessionManager(SessionDao sessionDao, CacheManager redisCacheManager){
+    public DefaultWebSessionManager sessionManager(SessionDao sessionDao){
 
         DefaultWebSessionManager defaultSessionManager = new DefaultWebSessionManager();
         defaultSessionManager.setDeleteInvalidSessions(true);
         defaultSessionManager.setSessionDAO(sessionDao);
-        //defaultSessionManager.setCacheManager(redisCacheManager);
         defaultSessionManager.setGlobalSessionTimeout(180*1000);
-
 
         return defaultSessionManager;
     }
