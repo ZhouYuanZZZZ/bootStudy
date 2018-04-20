@@ -38,9 +38,6 @@ public class BootstudyApplication {
 	private CityMapper cityMapper;
 
 	@Resource
-	private JdbcTemplate jdbcTemplate;
-
-	@Resource
 	private CityService cityService;
 
 //	@Resource

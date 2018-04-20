@@ -110,6 +110,9 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
 
         Map<String,String> map = new HashMap<>();
+
+        map.put("/testTransaction1", "anon");
+
         map.put("/loginPage", "anon");
         map.put("/login", "anon");
         map.put("/logout", "logout");
