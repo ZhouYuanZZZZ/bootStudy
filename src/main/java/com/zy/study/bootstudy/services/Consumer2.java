@@ -6,15 +6,18 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-public class Consumer1 extends DefaultConsumer {
+public class Consumer2 extends DefaultConsumer {
 
-    private static final Logger logger = LoggerFactory.getLogger(Consumer1.class);
-
-    public Consumer1(Channel channel) {
+    private static final Logger logger = LoggerFactory.getLogger(Consumer2.class);
+    /**
+     * Constructs a new instance and records its association to the passed-in channel.
+     *
+     * @param channel the channel to which this consumer is attached
+     */
+    public Consumer2(Channel channel) {
         super(channel);
     }
 
@@ -27,7 +30,5 @@ public class Consumer1 extends DefaultConsumer {
         }
         String message = new String(body, "UTF-8");
         logger.info(" [x] Received '" + message + "'");
-
-        //this.getChannel().basicAck(envelope.getDeliveryTag(), false);
     }
 }

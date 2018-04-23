@@ -9,7 +9,7 @@ import com.zy.study.bootstudy.services.Consumer2;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-public class TestApp {
+public class TestApp1 {
 
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
@@ -19,11 +19,15 @@ public class TestApp {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.queueDeclare("Q2", true, false, false, null);
-        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+        channel.exchangeDeclare("EX1", "fanout");
 
-        channel.basicConsume("Q5", false, new Consumer1(channel));
-        channel.basicConsume("Q6", false, new Consumer2(channel));
+        String queueName1 = channel.queueDeclare().getQueue();
+        channel.queueBind(queueName1, "EX1", "");
 
+        String queueName2 = channel.queueDeclare().getQueue();
+        channel.queueBind(queueName2, "EX1", "");
+
+        channel.basicConsume(queueName1, true, new Consumer1(channel));
+        channel.basicConsume(queueName2, true, new Consumer2(channel));
     }
 }
