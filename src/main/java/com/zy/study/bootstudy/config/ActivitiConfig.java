@@ -1,6 +1,7 @@
 package com.zy.study.bootstudy.config;
 
 import com.zy.study.bootstudy.properties.OdmConfigProperties;
+import org.activiti.engine.ProcessEngine;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,5 +33,11 @@ public class ActivitiConfig {
         ProcessEngineFactoryBean processEngineFactoryBean = new ProcessEngineFactoryBean();
         processEngineFactoryBean.setProcessEngineConfiguration(springProcessEngineConfiguration);
         return processEngineFactoryBean;
+    }
+
+    @Bean
+    public ProcessEngine processEngine(SpringProcessEngineConfiguration springProcessEngineConfiguration){
+        ProcessEngine processEngine = springProcessEngineConfiguration.buildProcessEngine();
+        return processEngine;
     }
 }
