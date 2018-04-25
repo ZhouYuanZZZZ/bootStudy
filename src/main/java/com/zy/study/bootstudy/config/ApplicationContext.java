@@ -15,7 +15,15 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 @EnableScheduling
-@Import(value = {MVCConfig.class,Odm.class,WebConfig.class,ShiroConfig.class,AsyConfigurer.class,OdmTransactionManager.class,RabbitMqConfig.class})
+@Import(value = {
+        MVCConfig.class,
+        Odm.class,
+        WebConfig.class,
+        ShiroConfig.class,
+        AsyConfigurer.class,
+        OdmTransactionManager.class,
+        RabbitMqConfig.class,
+        ActivitiConfig.class})
 public class ApplicationContext {
 
     @Bean

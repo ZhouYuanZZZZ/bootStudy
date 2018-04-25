@@ -3,13 +3,12 @@ package com.zy.study.bootstudy;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import com.zy.study.bootstudy.services.Consumer1;
-import com.zy.study.bootstudy.services.Consumer2;
+import com.zy.study.bootstudy.services.Consumer3;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-public class TestApp1 {
+public class TestApp2 {
 
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
@@ -19,15 +18,24 @@ public class TestApp1 {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.exchangeDeclare("EX1", "direct");
+        channel.queueDeclare("RPC", false, false, false, null);
+        channel.basicQos(1);
 
-        String queueName1 = channel.queueDeclare().getQueue();
-        channel.queueBind(queueName1, "EX1", "z1");
+        Consumer3 consumer3 = new Consumer3(channel);
+        channel.basicConsume("RPC", false,consumer3 );
+        System.out.println(" [x] Awaiting RPC requests");
 
-        String queueName2 = channel.queueDeclare().getQueue();
-        channel.queueBind(queueName2, "EX1", "z2");
+        while (true) {
+            synchronized(consumer3) {
+                try {
+                    consumer3.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
-        channel.basicConsume(queueName1, true, new Consumer1(channel));
-        channel.basicConsume(queueName2, true, new Consumer2(channel));
+
+
     }
 }
