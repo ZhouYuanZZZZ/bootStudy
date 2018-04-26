@@ -1,6 +1,5 @@
 package com.zy.study.bootstudy.shrio;
 
-import com.zy.study.bootstudy.utils.JedisPoolUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
@@ -20,7 +19,8 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(SessionDao.class);
 
-    private static  JedisPool jedisPool = JedisPoolUtils.getJedisPoolInstance();
+    @Resource
+    private JedisPool jedisPool;
 
     private final String  SESSIONID_PREFIX = "sessionId-";
 
@@ -50,7 +50,9 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
         } catch (Exception e) {
             logger.error("doCreate error", e);
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("doCreate end");
         }
 
@@ -72,7 +74,9 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
             logger.error("doReadSession error", e);
             return null;
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("doReadSession end");
         }
     }
@@ -91,7 +95,9 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
         } catch (Exception e) {
             logger.error("doUpdate error", e);
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("doUpdate end");
         }
 
@@ -110,7 +116,9 @@ public class SessionDao extends EnterpriseCacheSessionDAO {
         } catch (Exception e) {
             logger.error("doDelete error", e);
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("doDelete end");
         }
     }

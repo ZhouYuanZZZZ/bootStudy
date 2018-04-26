@@ -23,7 +23,8 @@ import java.util.concurrent.Executor;
         AsyConfigurer.class,
         OdmTransactionManager.class,
         RabbitMqConfig.class,
-        ActivitiConfig.class})
+        ActivitiConfig.class,
+        RedisConfig.class})
 public class ApplicationContext {
 
     @Bean

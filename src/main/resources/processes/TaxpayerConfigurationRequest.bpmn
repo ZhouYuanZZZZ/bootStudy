@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test" id="m1501554744556" name="">
+  <process id="TaxpayerConfigurationRequestProcess" name="Taxpayer Configuration Request" isExecutable="true" isClosed="false" processType="None">
+    <startEvent id="ApproveReturnCancellationStart" name="Start" activiti:initiator="${axBizFlowStartFillObligation}" activiti:formKey="com/cacss/itas/ret/Tret07ApproveExtensionRequest"></startEvent>
+    <userTask id="UserApproval" name="Taxpayer Verification Request" activiti:candidateGroups="RG:32cc7840-5079-494b-8cc3-386f2f081e71" activiti:formKey="redirect:/TbTaxpayerRequest/taxpayerRequestCapture/toApprovalPage.do?requestsysGuid=${reqUid}&amp;isProcess=true">
+      <documentation>${identifier}</documentation>
+    </userTask>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <exclusiveGateway id="exclusivegateway" name="Exclusive" activiti:async="true" default="rejectTask"></exclusiveGateway>
+    <serviceTask id="taxpayerConfigApprove" name="approve" activiti:async="true" activiti:class="com.zy.study.bootstudy.task.Task1"></serviceTask>
+    <serviceTask id="taxpayerConfigReject" name="reject" activiti:class="com.zy.study.bootstudy.task.Task1"></serviceTask>
+    <sequenceFlow id="_2" sourceRef="ApproveReturnCancellationStart" targetRef="UserApproval"></sequenceFlow>
+    <sequenceFlow id="_3" sourceRef="UserApproval" targetRef="exclusivegateway"></sequenceFlow>
+    <sequenceFlow id="approveTask" name="approveTask" sourceRef="exclusivegateway" targetRef="taxpayerConfigApprove">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${requestAction=='approve'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="rejectTask" name="rejectTask" sourceRef="exclusivegateway" targetRef="taxpayerConfigReject"></sequenceFlow>
+    <sequenceFlow id="_6" sourceRef="taxpayerConfigApprove" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="_7" sourceRef="taxpayerConfigReject" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_TaxpayerConfigurationRequestProcess">
+    <bpmndi:BPMNPlane bpmnElement="TaxpayerConfigurationRequestProcess" id="BPMNPlane_TaxpayerConfigurationRequestProcess">
+      <bpmndi:BPMNShape bpmnElement="ApproveReturnCancellationStart" id="BPMNShape_ApproveReturnCancellationStart">
+        <omgdc:Bounds height="35.0" width="35.0" x="15.0" y="135.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="UserApproval" id="BPMNShape_UserApproval">
+        <omgdc:Bounds height="55.0" width="105.0" x="120.0" y="125.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="620.0" y="145.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway" id="BPMNShape_exclusivegateway">
+        <omgdc:Bounds height="40.0" width="40.0" x="300.0" y="135.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="taxpayerConfigApprove" id="BPMNShape_taxpayerConfigApprove">
+        <omgdc:Bounds height="55.0" width="105.0" x="420.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="taxpayerConfigReject" id="BPMNShape_taxpayerConfigReject">
+        <omgdc:Bounds height="55.0" width="105.0" x="420.0" y="200.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_2" id="BPMNEdge__2">
+        <omgdi:waypoint x="50.0" y="152.0"></omgdi:waypoint>
+        <omgdi:waypoint x="120.0" y="152.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_3" id="BPMNEdge__3">
+        <omgdi:waypoint x="225.0" y="152.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="155.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="approveTask" id="BPMNEdge_approveTask">
+        <omgdi:waypoint x="320.0" y="135.0"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="420.0" y="87.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="63.0" x="0.0" y="0.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="rejectTask" id="BPMNEdge_rejectTask">
+        <omgdi:waypoint x="320.0" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="420.0" y="227.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="50.0" x="0.0" y="0.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_6" id="BPMNEdge__6">
+        <omgdi:waypoint x="525.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="637.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="637.0" y="145.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_7" id="BPMNEdge__7">
+        <omgdi:waypoint x="525.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="637.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="637.0" y="180.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

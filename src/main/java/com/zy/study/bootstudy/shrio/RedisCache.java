@@ -1,20 +1,24 @@
 package com.zy.study.bootstudy.shrio;
 
-import com.zy.study.bootstudy.utils.JedisPoolUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.util.SerializationUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
+import javax.annotation.Resource;
 import java.util.*;
 
+@Component
 public class RedisCache<K,V> implements Cache<K,V> {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisCache.class);
 
-    private JedisPool jedisPool = JedisPoolUtils.getJedisPoolInstance();
+    @Resource
+    private JedisPool jedisPool;
 
     private String keyPrefix = "shiro_redis_data:";
 
@@ -46,7 +50,9 @@ public class RedisCache<K,V> implements Cache<K,V> {
             logger.error("get error",e);
             return null;
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("get end");
         }
 
@@ -71,7 +77,9 @@ public class RedisCache<K,V> implements Cache<K,V> {
             logger.error("put error",e);
             return null;
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("put end");
         }
     }
@@ -94,7 +102,9 @@ public class RedisCache<K,V> implements Cache<K,V> {
             return null;
 
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("remove end");
         }
     }
@@ -114,7 +124,9 @@ public class RedisCache<K,V> implements Cache<K,V> {
 
 
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("clear end");
         }
     }
@@ -134,7 +146,9 @@ public class RedisCache<K,V> implements Cache<K,V> {
             logger.error("clear error",e);
             return -1;
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("size end");
         }
     }
@@ -160,7 +174,9 @@ public class RedisCache<K,V> implements Cache<K,V> {
             logger.error("keys error",e);
             return null;
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("keys end");
         }
     }
@@ -187,7 +203,9 @@ public class RedisCache<K,V> implements Cache<K,V> {
             logger.error("values error",e);
             return null;
         }finally {
-            JedisPoolUtils.release(resource);
+            if(resource != null){
+                resource.close();
+            }
             logger.info("values end");
         }
     }

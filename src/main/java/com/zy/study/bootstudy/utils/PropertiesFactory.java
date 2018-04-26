@@ -18,14 +18,14 @@ public class PropertiesFactory {
     private static Properties appProperties = new Properties();
 
     static {
-        Reader appPropertiesReader = getReader("application-dev.properties");
-        if(appPropertiesReader != null){
-            try {
-                appProperties.load(appPropertiesReader);
-            } catch (IOException e) {
-                logger.error("init error",e);
-            }
-        }
+//        Reader appPropertiesReader = getReader("application-dev.properties");
+//        if(appPropertiesReader != null){
+//            try {
+//                appProperties.load(appPropertiesReader);
+//            } catch (IOException e) {
+//                logger.error("init error",e);
+//            }
+//        }
 
     }
 
