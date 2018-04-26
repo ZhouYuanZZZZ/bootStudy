@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="GBK" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:yaoqiang="http://bpmn.sourceforge.net" exporter="Yaoqiang BPMN Editor" exporterVersion="5.3" expressionLanguage="http://www.w3.org/1999/XPath" id="m1501554744556" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://bpmn.sourceforge.net/schemas/BPMN20.xsd">
+  <process id="TaxpayerConfigurationRequestProcess" isClosed="false" isExecutable="true" name="Taxpayer Configuration Request" processType="None">
+    <extensionElements>
+      <yaoqiang:description/>
+      <yaoqiang:pageFormat height="841.8897637795276" imageableHeight="831.8897637795276" imageableWidth="588.1102362204724" imageableX="5.0" imageableY="5.0" orientation="0" width="598.1102362204724"/>
+      <yaoqiang:page background="#FFFFFF" horizontalCount="1" verticalCount="1"/>
+    </extensionElements>
+    <startEvent activiti:formKey="com/cacss/itas/ret/Tret07ApproveExtensionRequest" activiti:initiator="${axBizFlowStartFillObligation}" id="ApproveReturnCancellationStart" isInterrupting="true" name="Start" parallelMultiple="false">
+      <outgoing>_2</outgoing>
+      <outputSet/>
+    </startEvent>
+    <userTask activiti:candidateGroups="RG:32cc7840-5079-494b-8cc3-386f2f081e71" activiti:formKey="redirect:/TbTaxpayerRequest/taxpayerRequestCapture/toApprovalPage.do?requestsysGuid=${reqUid}&amp;isProcess=true" completionQuantity="1" id="UserApproval" implementation="##unspecified" isForCompensation="false" name="Taxpayer Verification Request" startQuantity="1">
+      <documentation id="UserApproval_D_1" textFormat="text/plain"><![CDATA[${identifier}]]></documentation>
+      <incoming>_2</incoming>
+      <outgoing>_3</outgoing>
+    </userTask>
+    <endEvent id="endevent1" name="End">
+      <incoming>_6</incoming>
+      <incoming>_7</incoming>
+      <inputSet/>
+    </endEvent>
+    <exclusiveGateway activiti:async="true" default="rejectTask" gatewayDirection="Unspecified" id="exclusivegateway" name="Exclusive">
+      <incoming>_3</incoming>
+      <outgoing>approveTask</outgoing>
+      <outgoing>rejectTask</outgoing>
+    </exclusiveGateway>
+    <serviceTask activiti:async="true" activiti:class="com.zy.study.bootstudy.task.Task1" completionQuantity="1" id="taxpayerConfigApprove" implementation="##WebService" isForCompensation="false" name="approve" startQuantity="1">
+      <incoming>approveTask</incoming>
+      <outgoing>_6</outgoing>
+    </serviceTask>
+    <serviceTask activiti:class="com.zy.study.bootstudy.task.Task1" completionQuantity="1" id="taxpayerConfigReject" implementation="##WebService" isForCompensation="false" name="reject" startQuantity="1">
+      <incoming>rejectTask</incoming>
+      <outgoing>_7</outgoing>
+    </serviceTask>
+    <sequenceFlow id="_2" sourceRef="ApproveReturnCancellationStart" targetRef="UserApproval"/>
+    <sequenceFlow id="_3" sourceRef="UserApproval" targetRef="exclusivegateway"/>
+    <sequenceFlow id="approveTask" name="approveTask" sourceRef="exclusivegateway" targetRef="taxpayerConfigApprove">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${requestAction=='approve'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="rejectTask" name="rejectTask" sourceRef="exclusivegateway" targetRef="taxpayerConfigReject"/>
+    <sequenceFlow id="_6" sourceRef="taxpayerConfigApprove" targetRef="endevent1"/>
+    <sequenceFlow id="_7" sourceRef="taxpayerConfigReject" targetRef="endevent1"/>
+  </process>
+  <bpmndi:BPMNDiagram id="Yaoqiang_Diagram-TaxpayerConfigurationRequestProcess" name="Untitled Diagram" resolution="96.0">
+    <bpmndi:BPMNPlane bpmnElement="TaxpayerConfigurationRequestProcess">
+      <bpmndi:BPMNShape bpmnElement="ApproveReturnCancellationStart" id="Yaoqiang-ApproveReturnCancellationStart">
+        <omgdc:Bounds height="32.0" width="32.0" x="15.0" y="135.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="29.0" x="16.5" y="174.47"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="UserApproval" id="Yaoqiang-UserApproval">
+        <omgdc:Bounds height="55.0" width="105.0" x="120.0" y="125.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="53.02" width="61.0" x="142.0" y="127.99"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="Yaoqiang-endevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="620.0" y="145.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="24.0" x="624.0" y="184.47"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway" id="Yaoqiang-exclusivegateway" isMarkerVisible="true">
+        <omgdc:Bounds height="42.0" width="42.0" x="300.0" y="135.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="52.0" x="295.0" y="179.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="taxpayerConfigApprove" id="Yaoqiang-taxpayerConfigApprove">
+        <omgdc:Bounds height="55.0" width="105.0" x="420.0" y="60.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="46.0" x="449.5" y="78.99"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="taxpayerConfigReject" id="Yaoqiang-taxpayerConfigReject">
+        <omgdc:Bounds height="55.0" width="105.0" x="420.0" y="200.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="33.0" x="456.0" y="218.99"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="rejectTask" id="Yaoqiang-rejectTask">
+        <omgdi:waypoint x="320.0" y="176.0"/>
+        <omgdi:waypoint x="320.0" y="197.0"/>
+        <omgdi:waypoint x="320.0" y="227.0"/>
+        <omgdi:waypoint x="420.0" y="227.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="56.0" x="316.25" y="216.99"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_7" id="Yaoqiang-_7">
+        <omgdi:waypoint x="525.0" y="227.0"/>
+        <omgdi:waypoint x="637.0" y="227.0"/>
+        <omgdi:waypoint x="637.0" y="176.9687194226713"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="6.0" x="603.02" y="216.49"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_6" id="Yaoqiang-_6">
+        <omgdi:waypoint x="525.0" y="87.0"/>
+        <omgdi:waypoint x="637.0" y="87.0"/>
+        <omgdi:waypoint x="637.0" y="145.0312805773287"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="6.0" x="607.02" y="76.49"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_3" id="Yaoqiang-_3">
+        <omgdi:waypoint x="225.0" y="152.5"/>
+        <omgdi:waypoint x="300.0" y="156.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="6.0" x="259.5" y="143.74"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_2" id="Yaoqiang-_2">
+        <omgdi:waypoint x="47.0" y="151.0"/>
+        <omgdi:waypoint x="120.0" y="152.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="6.0" x="80.5" y="141.24"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="approveTask" id="Yaoqiang-approveTask">
+        <omgdi:waypoint x="320.0" y="136.0"/>
+        <omgdi:waypoint x="320.0" y="87.0"/>
+        <omgdi:waypoint x="420.0" y="87.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="37.02" width="144.0" x="273.5" y="68.49"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

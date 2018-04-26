@@ -60,7 +60,7 @@ public class Odm implements EnvironmentAware {
         MysqlXADataSource mysqlXaDataSource = new MysqlXADataSource();
         mysqlXaDataSource.setUrl(env.getProperty("odm.url"));
         mysqlXaDataSource.setPinGlobalTxToPhysicalConnection(true);
-        mysqlXaDataSource.setPassword(env.getProperty("odm.username"));
+        mysqlXaDataSource.setPassword(env.getProperty("odm.password"));
         mysqlXaDataSource.setUser(env.getProperty("odm.username"));
 
         AtomikosDataSourceBean xaDataSource = new AtomikosDataSourceBean();
