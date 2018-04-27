@@ -135,11 +135,13 @@ public class ActivitiCommonTest {
         DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
         deploymentQuery.processDefinitionKey("TaxpayerConfigurationRequestProcess");
         List<Deployment> list = deploymentQuery.list();
-        Deployment deployment = list.get(0);
 
-        logger.info(deployment.getId());
+        for (Deployment deployment:list){
+            logger.info("delete:{}",deployment.getId());
+            repositoryService.deleteDeployment(deployment.getId(),true);
+        }
 
-        repositoryService.deleteDeployment(deployment.getId(),true);
+
     }
 
     @Test
