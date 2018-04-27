@@ -28,12 +28,12 @@ public class ActivitiConfig {
         return springProcessEngineConfiguration;
     }
 
-    @Bean
-    public ProcessEngineFactoryBean processEngineFactoryBean(SpringProcessEngineConfiguration springProcessEngineConfiguration){
-        ProcessEngineFactoryBean processEngineFactoryBean = new ProcessEngineFactoryBean();
-        processEngineFactoryBean.setProcessEngineConfiguration(springProcessEngineConfiguration);
-        return processEngineFactoryBean;
-    }
+//    @Bean
+//    public ProcessEngineFactoryBean processEngineFactoryBean(SpringProcessEngineConfiguration springProcessEngineConfiguration){
+//        ProcessEngineFactoryBean processEngineFactoryBean = new ProcessEngineFactoryBean();
+//        processEngineFactoryBean.setProcessEngineConfiguration(springProcessEngineConfiguration);
+//        return processEngineFactoryBean;
+//    }
 
     @Bean
     public ProcessEngine processEngine(SpringProcessEngineConfiguration springProcessEngineConfiguration){

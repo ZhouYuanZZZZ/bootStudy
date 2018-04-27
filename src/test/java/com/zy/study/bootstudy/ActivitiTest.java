@@ -33,7 +33,9 @@ public class ActivitiTest {
         deployment.addClasspathResource("processes/TaxpayerConfigurationRequest.png");
         Deployment deploy = deployment.deploy();
 
-        logger.info(JSON.toJSONString(deploy));
+        logger.info(deploy.getId());
+        logger.info(deploy.getKey());
+        logger.info(deploy.getName());
     }
 
     @Test
