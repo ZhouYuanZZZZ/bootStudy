@@ -4,6 +4,7 @@ import com.zy.study.bootstudy.aspect.AspectService;
 import com.zy.study.bootstudy.async.TestService;
 import com.zy.study.bootstudy.entity.City;
 import com.zy.study.bootstudy.mapper.CityMapper;
+import com.zy.study.bootstudy.utils.poi.PoiUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.io.*;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -60,6 +62,21 @@ public class BootstudyApplicationTests {
 		logger.info("--------------------------");
 		testService.test();
 		logger.info("--------------------------");
+	}
+
+	@Test
+	public void downExcel0() throws IOException {
+		List<City> cities = cityMapper.selectByExample(null);
+		long startTime = System.currentTimeMillis();
+		ByteArrayOutputStream  outputStream = (ByteArrayOutputStream) PoiUtil.exportExcel(cities, City.class);
+		long endTime = System.currentTimeMillis();
+		logger.info("time:{}",endTime-startTime);
+
+		File file = new File("C:\\Users\\zy\\Desktop\\a.xls");
+		FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+		fileOutputStream.write(outputStream.toByteArray());
+		fileOutputStream.flush();
 	}
 
 }

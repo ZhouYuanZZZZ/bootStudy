@@ -2,10 +2,13 @@ package com.zy.study.bootstudy;
 
 import com.zy.study.bootstudy.utils.FileUtil;
 import org.activiti.engine.*;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.repository.DeploymentQuery;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.activiti.engine.task.NativeTaskQuery;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
@@ -20,19 +23,18 @@ import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ActivitiCommonTest {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(ActivitiCommonTest.class);
 
     private ProcessEngine processEngine;
-    
+
+    private static final String KEY = "TaxpayerConfigurationRequestProcess";
+
     @Before
-    public void setUp(){
+    public void setUp() {
         ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
 
         processEngineConfiguration.setJdbcDriver("com.mysql.jdbc.Driver");
@@ -43,16 +45,16 @@ public class ActivitiCommonTest {
         //设置是否自动更新
         processEngineConfiguration.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
 
-         processEngine = processEngineConfiguration.buildProcessEngine();
+        processEngine = processEngineConfiguration.buildProcessEngine();
     }
 
     @After
-    public void release(){
+    public void release() {
         processEngine.close();
     }
 
     @Test
-    public void test0(){
+    public void test0() {
         RepositoryService repositoryService = processEngine.getRepositoryService();
 
         DeploymentBuilder deployment = repositoryService.createDeployment();
@@ -64,31 +66,16 @@ public class ActivitiCommonTest {
         logger.info(deploy.getKey());
         logger.info(deploy.getName());
     }
-    
-    @Test
-    public void test1(){
-        RuntimeService runtimeService = processEngine.getRuntimeService();
-        UUID uuid = UUID.randomUUID();
-        Map<String,Object> paraMap = new HashMap<>();
-        paraMap.put("reqUid", "reqUid:"+uuid);
-        paraMap.put("identifier","identifier:"+uuid);
-        ProcessInstance instance = runtimeService.startProcessInstanceByKey("TaxpayerConfigurationRequestProcess","businessKey",paraMap);
 
-        logger.info(instance.getDeploymentId());
-        logger.info(instance.getId());
-        logger.info(instance.getActivityId());
-        logger.info(instance.getBusinessKey());
-        logger.info(instance.getName());
-    }
-    
+
     @Test
-    public void test2(){
+    public void test2() {
         TaskService taskService = processEngine.getTaskService();
         TaskQuery taskQuery = taskService.createTaskQuery();
         taskQuery.taskCandidateGroup("RG:32cc7840-5079-494b-8cc3-386f2f081e71");
         List<Task> list = taskQuery.list();
 
-        for (Task task:list){
+        for (Task task : list) {
             logger.info(task.getId());
             logger.info(task.getAssignee());
             logger.info(task.getDescription());
@@ -97,20 +84,20 @@ public class ActivitiCommonTest {
     }
 
     @Test
-    public void test3(){
+    public void test3() {
         TaskService taskService = processEngine.getTaskService();
         TaskQuery taskQuery = taskService.createTaskQuery();
         taskQuery.taskCandidateGroup("RG:32cc7840-5079-494b-8cc3-386f2f081e71");
         List<Task> list = taskQuery.list();
 
-        Map<String,Object> paraMap = new HashMap<>();
-        paraMap.put("requestAction","approve");
-        taskService.complete(list.get(0).getId(),paraMap);
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("requestAction", "approve");
+        taskService.complete(list.get(0).getId(), paraMap);
 
     }
 
     @Test
-    public void queryProcessDef(){
+    public void queryProcessDef() {
         /*
         * id key:version:random
         * name 对应流程文件process节点的name属性
@@ -124,11 +111,11 @@ public class ActivitiCommonTest {
 
         List<Deployment> list = deploymentQuery.list();
 
-        logger.info(list.size()+"");
+        logger.info(list.size() + "");
     }
 
     @Test
-    public void deleteDeployment(){
+    public void deleteDeployment() {
 
         RepositoryService repositoryService = processEngine.getRepositoryService();
 
@@ -136,16 +123,16 @@ public class ActivitiCommonTest {
         deploymentQuery.processDefinitionKey("TaxpayerConfigurationRequestProcess");
         List<Deployment> list = deploymentQuery.list();
 
-        for (Deployment deployment:list){
-            logger.info("delete:{}",deployment.getId());
-            repositoryService.deleteDeployment(deployment.getId(),true);
+        for (Deployment deployment : list) {
+            logger.info("delete:{}", deployment.getId());
+            repositoryService.deleteDeployment(deployment.getId(), true);
         }
 
 
     }
 
     @Test
-    public void viewImage(){
+    public void viewImage() {
         RepositoryService repositoryService = processEngine.getRepositoryService();
 
         DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
@@ -162,10 +149,56 @@ public class ActivitiCommonTest {
             }
         }
 
-        if(!StringUtils.isEmpty(imageName)){
+        if (!StringUtils.isEmpty(imageName)) {
             InputStream resourceAsStream = repositoryService.getResourceAsStream(deployment.getId(), imageName);
             File file = FileUtil.createFile("C:\\Users\\zy127\\Desktop\\temp\\" + imageName);
-            FileUtil.copyInputStreamToFile(resourceAsStream,file);
+            FileUtil.copyInputStreamToFile(resourceAsStream, file);
+        }
+    }
+
+    @Test
+    public void startProcessInstance() {
+        RuntimeService runtimeService = processEngine.getRuntimeService();
+        UUID uuid = UUID.randomUUID();
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("reqUid", "reqUid:" + uuid);
+        paraMap.put("identifier", "identifier:" + uuid);
+        ProcessInstance instance = runtimeService.startProcessInstanceByKey("TaxpayerConfigurationRequestProcess", "businessKey", paraMap);
+
+        logger.info(instance.getDeploymentId());
+        logger.info(instance.getId());
+        logger.info(instance.getActivityId());
+        logger.info(instance.getBusinessKey());
+        logger.info(instance.getName());
+    }
+
+    @Test
+    public void queryProcessStatus() {
+        RuntimeService runtimeService = processEngine.getRuntimeService();
+        ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+        processInstanceQuery.processDefinitionKey(KEY);
+        List<ProcessInstance> list = processInstanceQuery.list();
+
+        for (ProcessInstance processInstance:list){
+            logger.info(processInstance.getProcessDefinitionKey());
+            logger.info(processInstance.getBusinessKey());
+            logger.info(processInstance.getName());
+            logger.info(processInstance.getDescription());
+            logger.info("------------");
+
+        }
+    }
+
+    @Test
+    public void queryHistoryTask(){
+        HistoryService historyService = processEngine.getHistoryService();
+        HistoricTaskInstanceQuery historicTaskInstanceQuery = historyService.createHistoricTaskInstanceQuery();
+        historicTaskInstanceQuery.taskCandidateGroup("RG:32cc7840-5079-494b-8cc3-386f2f081e71");
+        List<HistoricTaskInstance> list = historicTaskInstanceQuery.list();
+
+        for(HistoricTaskInstance historicTaskInstance:list){
+            String processInstanceId = historicTaskInstance.getProcessInstanceId();
+            logger.info(processInstanceId);
         }
     }
 }
