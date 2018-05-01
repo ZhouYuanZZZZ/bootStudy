@@ -3,7 +3,9 @@ package com.zy.study.bootstudy;
 import com.zy.study.bootstudy.aspect.AspectService;
 import com.zy.study.bootstudy.async.TestService;
 import com.zy.study.bootstudy.entity.City;
+import com.zy.study.bootstudy.entity1.TbInvoice;
 import com.zy.study.bootstudy.mapper.CityMapper;
+import com.zy.study.bootstudy.mapper1.TbInvoiceMapper;
 import com.zy.study.bootstudy.utils.poi.PoiUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.io.*;
@@ -24,6 +27,9 @@ public class BootstudyApplicationTests {
 
 	@Resource
 	private CityMapper cityMapper;
+
+	@Resource
+	private TbInvoiceMapper tbInvoiceMapper;
 
 	@Resource
 	private AspectService aspectService;
@@ -68,7 +74,7 @@ public class BootstudyApplicationTests {
 	public void downExcel0() throws IOException {
 		List<City> cities = cityMapper.selectByExample(null);
 		long startTime = System.currentTimeMillis();
-		ByteArrayOutputStream  outputStream = (ByteArrayOutputStream) PoiUtil.exportExcel(cities, City.class);
+		ByteArrayOutputStream  outputStream =  PoiUtil.exportExcel(cities, City.class);
 		long endTime = System.currentTimeMillis();
 		logger.info("time:{}",endTime-startTime);
 
@@ -77,6 +83,20 @@ public class BootstudyApplicationTests {
 
 		fileOutputStream.write(outputStream.toByteArray());
 		fileOutputStream.flush();
+	}
+
+	@Test
+	public void testSelectData(){
+		List<City> cities = cityMapper.selectByExample(null);
+
+		Example example = new Example(TbInvoice.class);
+		Example.Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("invoiceUid",2563);
+		List<TbInvoice> tbInvoices = tbInvoiceMapper.selectByExample(example);
+
+		logger.info(cities.size()+"");
+		logger.info(tbInvoices.size()+"");
+
 	}
 
 }

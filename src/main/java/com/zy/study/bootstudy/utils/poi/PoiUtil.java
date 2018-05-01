@@ -21,7 +21,7 @@ public class PoiUtil {
     public final static String notnullerror = "请填入第{0}行的{1},{2}不能为空";
     public final static String errormsg = "第{0}行的{1}数据导入错误";
 
-    public static <T> OutputStream exportExcel(List<T> models, Class<T> clazz) {
+    public static <T> ByteArrayOutputStream exportExcel(List<T> models, Class<T> clazz) {
 
         try {
             if (!clazz.isAnnotationPresent(ModelTitle.class)) {

@@ -133,9 +133,9 @@ public class Odm implements EnvironmentAware {
     }
 
     @Bean
-    public MapperScannerConfigurer mapperScannerConfigurer1(){
+    public tk.mybatis.spring.mapper.MapperScannerConfigurer  mapperScannerConfigurer1(){
 
-        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+        tk.mybatis.spring.mapper.MapperScannerConfigurer mapperScannerConfigurer = new tk.mybatis.spring.mapper.MapperScannerConfigurer();
         //扫描Mapper配置文件与接口的包名
         mapperScannerConfigurer.setBasePackage(env.getProperty("odm1.mapperScannerConfigurerBasePackage"));
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory1");
