@@ -86,13 +86,24 @@ public class BootstudyApplicationTests {
 	}
 
 	@Test
-	public void testSelectData(){
+	public void testSelectData() throws IOException {
 		List<City> cities = cityMapper.selectByExample(null);
 
-		Example example = new Example(TbInvoice.class);
-		Example.Criteria criteria = example.createCriteria();
-		criteria.andEqualTo("invoiceUid",2563);
-		List<TbInvoice> tbInvoices = tbInvoiceMapper.selectByExample(example);
+//		Example example = new Example(TbInvoice.class);
+//		Example.Criteria criteria = example.createCriteria();
+//		criteria.andEqualTo("invoiceUid",2563);
+		List<TbInvoice> tbInvoices = tbInvoiceMapper.selectAll();
+
+		long startTime = System.currentTimeMillis();
+		ByteArrayOutputStream  outputStream =  PoiUtil.exportExcel(tbInvoices, TbInvoice.class);
+		long endTime = System.currentTimeMillis();
+		logger.info("time:{}",endTime-startTime);
+
+		File file = new File("C:\\Users\\zy\\Desktop\\Invoice.xls");
+		FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+		fileOutputStream.write(outputStream.toByteArray());
+		fileOutputStream.flush();
 
 		logger.info(cities.size()+"");
 		logger.info(tbInvoices.size()+"");

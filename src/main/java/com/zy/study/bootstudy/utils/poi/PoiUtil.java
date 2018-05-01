@@ -1,5 +1,6 @@
 package com.zy.study.bootstudy.utils.poi;
 
+import com.zy.study.bootstudy.utils.DateUtil;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -21,6 +22,8 @@ public class PoiUtil {
     public final static String notnullerror = "请填入第{0}行的{1},{2}不能为空";
     public final static String errormsg = "第{0}行的{1}数据导入错误";
 
+    private static SimpleDateFormat dateFormat = DateUtil.getDataTimeDateFormat();
+
     public static <T> ByteArrayOutputStream exportExcel(List<T> models, Class<T> clazz) {
 
         try {
@@ -31,36 +34,20 @@ public class PoiUtil {
             HSSFWorkbook wb = new HSSFWorkbook();
             HSSFSheet sheet = wb.createSheet();
 
-            HSSFCellStyle titleStyle = wb.createCellStyle();
-            titleStyle.setAlignment(HorizontalAlignment.CENTER);
-            HSSFFont font = wb.createFont();
-            font.setBold(true);
-            font.setFontHeight((short) 400);
-            titleStyle.setFont(font);
-
             HSSFRow row0 = sheet.createRow(0);
             HSSFCell titleCell = row0.createCell(0);
 
             ModelTitle modelTitle = clazz.getAnnotation(ModelTitle.class);
             titleCell.setCellValue(new HSSFRichTextString(modelTitle.name()));
-            titleCell.setCellStyle(titleStyle);
+            titleCell.setCellStyle(getTitleCellStyle(wb));
 
             Field[] fields = clazz.getDeclaredFields();
             HSSFRow headRow = sheet.createRow(1);
             int colSzie = 0;
 
-            /**
-             * 设置表头样式
-             */
-            HSSFCellStyle headStyle = wb.createCellStyle();
-            headStyle.setAlignment(HorizontalAlignment.CENTER);
-            HSSFFont headFont = wb.createFont();
-            headFont.setBold(true);
-            headFont.setFontHeight((short) 240);
-            headStyle.setFont(headFont);
-
             List<Integer> cells = new ArrayList<Integer>();
             Map<Integer,Field> modelFields = new HashMap<>();
+
             for (Field field : fields) {
                 if (field.isAnnotationPresent(ModelProp.class)) {
                     ModelProp modelProp = field.getAnnotation(ModelProp.class);
@@ -69,9 +56,10 @@ public class PoiUtil {
                     }
                     cells.add(modelProp.colIndex());
                     modelFields.put(modelProp.colIndex(),field);
+
                     HSSFCell cell = headRow.createCell(modelProp.colIndex());
                     cell.setCellValue(new HSSFRichTextString(modelProp.name()));
-                    cell.setCellStyle(headStyle);
+                    cell.setCellStyle(getHeadCellStyle(wb));
                     colSzie++;
 
                     sheet.autoSizeColumn((short) modelProp.colIndex());
@@ -90,8 +78,6 @@ public class PoiUtil {
             }
 
             HSSFCellStyle cellStyle = wb.createCellStyle();
-            HSSFDataFormat format = wb.createDataFormat();
-            cellStyle.setDataFormat(format.getFormat("@"));
 
             for (int i = 0; i < models.size(); i++) {
                 T t = models.get(i);
@@ -110,9 +96,7 @@ public class PoiUtil {
                      String textValue = null;
                     if (value instanceof Date) {
                         Date date = (Date) value;
-                        SimpleDateFormat sdf = new SimpleDateFormat(
-                                "yyyy-mm-dd");
-                        textValue = sdf.format(date);
+                        textValue = dateFormat.format(date);
                     } else {
                         // 其它数据类型都当作字符串简单处理
                         if (value == null) {
@@ -121,9 +105,9 @@ public class PoiUtil {
                         textValue = value.toString();
 
                     }
+
                     cell.setCellValue(textValue);
                     cell.setCellStyle(cellStyle);
-
                 }
             }
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, colSzie - 1));
@@ -138,5 +122,31 @@ public class PoiUtil {
             logger.error("exportExcel error", e);
             return null;
         }
+    }
+
+    private static HSSFCellStyle getTitleCellStyle(HSSFWorkbook wb){
+        HSSFCellStyle titleStyle = wb.createCellStyle();
+
+        HSSFFont font = wb.createFont();
+        font.setBold(true);
+        font.setFontHeight((short) 400);
+
+        titleStyle.setFont(font);
+        titleStyle.setAlignment(HorizontalAlignment.CENTER);
+
+        return titleStyle;
+    }
+
+    private static HSSFCellStyle getHeadCellStyle(HSSFWorkbook wb){
+        HSSFCellStyle headStyle = wb.createCellStyle();
+
+        HSSFFont headFont = wb.createFont();
+        headFont.setBold(true);
+        headFont.setFontHeight((short) 240);
+
+        headStyle.setAlignment(HorizontalAlignment.CENTER);
+        headStyle.setFont(headFont);
+
+        return headStyle;
     }
 }
