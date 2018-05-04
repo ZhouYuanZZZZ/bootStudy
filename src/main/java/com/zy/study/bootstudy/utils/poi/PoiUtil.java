@@ -3,11 +3,13 @@ package com.zy.study.bootstudy.utils.poi;
 import com.zy.study.bootstudy.utils.DateUtil;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
@@ -148,5 +150,11 @@ public class PoiUtil {
         headStyle.setFont(headFont);
 
         return headStyle;
+    }
+
+    private static Workbook getWorkBookByFile(File file){
+        String fileName = file.getName();
+        return null;
+
     }
 }

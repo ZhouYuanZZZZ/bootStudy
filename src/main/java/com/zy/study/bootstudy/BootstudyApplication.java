@@ -1,7 +1,6 @@
 package com.zy.study.bootstudy;
 import com.zy.study.bootstudy.entity.City;
 import com.zy.study.bootstudy.mapper.CityMapper;
-import com.zy.study.bootstudy.mapper1.TbInvoiceMapper;
 import com.zy.study.bootstudy.properties.PropertiesTest;
 import com.zy.study.bootstudy.services.CityService;
 import org.slf4j.Logger;
@@ -38,8 +37,6 @@ public class BootstudyApplication {
 	@Resource
 	private CityMapper cityMapper;
 
-	@Resource
-	private TbInvoiceMapper tbInvoiceMapper;
 
 	@Resource
 	private CityService cityService;

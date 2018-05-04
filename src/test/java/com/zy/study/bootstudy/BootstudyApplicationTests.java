@@ -3,9 +3,7 @@ package com.zy.study.bootstudy;
 import com.zy.study.bootstudy.aspect.AspectService;
 import com.zy.study.bootstudy.async.TestService;
 import com.zy.study.bootstudy.entity.City;
-import com.zy.study.bootstudy.entity1.TbInvoice;
 import com.zy.study.bootstudy.mapper.CityMapper;
-import com.zy.study.bootstudy.mapper1.TbInvoiceMapper;
 import com.zy.study.bootstudy.utils.poi.PoiUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,9 +25,6 @@ public class BootstudyApplicationTests {
 
 	@Resource
 	private CityMapper cityMapper;
-
-	@Resource
-	private TbInvoiceMapper tbInvoiceMapper;
 
 	@Resource
 	private AspectService aspectService;
@@ -92,21 +87,21 @@ public class BootstudyApplicationTests {
 //		Example example = new Example(TbInvoice.class);
 //		Example.Criteria criteria = example.createCriteria();
 //		criteria.andEqualTo("invoiceUid",2563);
-		List<TbInvoice> tbInvoices = tbInvoiceMapper.selectAll();
+		//List<TbInvoice> tbInvoices = tbInvoiceMapper.selectAll();
 
 		long startTime = System.currentTimeMillis();
-		ByteArrayOutputStream  outputStream =  PoiUtil.exportExcel(tbInvoices, TbInvoice.class);
+		//ByteArrayOutputStream  outputStream =  PoiUtil.exportExcel(tbInvoices, TbInvoice.class);
 		long endTime = System.currentTimeMillis();
 		logger.info("time:{}",endTime-startTime);
 
-		File file = new File("C:\\Users\\zy\\Desktop\\Invoice.xls");
+		File file = new File("C:\\Users\\zy127\\Desktop\\Invoice.xls");
 		FileOutputStream fileOutputStream = new FileOutputStream(file);
 
-		fileOutputStream.write(outputStream.toByteArray());
+		//fileOutputStream.write(outputStream.toByteArray());
 		fileOutputStream.flush();
 
 		logger.info(cities.size()+"");
-		logger.info(tbInvoices.size()+"");
+		//logger.info(tbInvoices.size()+"");
 
 	}
 
