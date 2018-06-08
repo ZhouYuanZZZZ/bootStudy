@@ -73,7 +73,7 @@ public class HttpUtil {
         }
 
         logger.info("cost time:{}",end-start);
-        logger.info("request info:{} ----> ", JSON.toJSONString(uri),JSON.toJSON(paramMap));
+        logger.info("request info:{} ---->{}", JSON.toJSONString(uri),JSON.toJSON(paramMap));
 
         return jsonResult;
     }

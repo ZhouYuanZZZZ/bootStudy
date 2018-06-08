@@ -48,4 +48,12 @@ public class Test0 {
         System.out.println(result);
     }
 
+    @Test
+    public void test4(){
+        char[] c = new char[10];
+        for (char item:c){
+            System.out.println(item);
+        }
+    }
+
 }

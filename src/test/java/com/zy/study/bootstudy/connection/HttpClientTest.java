@@ -1,5 +1,8 @@
 package com.zy.study.bootstudy.connection;
 
+import com.alibaba.fastjson.JSON;
+import com.zy.study.bootstudy.utils.httpUtil.HttpUtil;
+import com.zy.study.bootstudy.utils.httpUtil.JsonResult;
 import org.apache.http.*;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -16,7 +19,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HttpClientTest {
 
@@ -66,5 +71,21 @@ public class HttpClientTest {
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
         HttpPost httppost = new HttpPost("http://localhost/handler.do");
         httppost.setEntity(entity);
+    }
+
+    @Test
+    public void test5() throws URISyntaxException {
+        URI uri = new URIBuilder()
+                .setScheme("http")
+                .setHost("192.168.1.159")
+                .setPort(8887)
+                .setPath("/tcs.web/portal/taxpayer.do")
+                .build();
+
+        Map<String,String> paraMap = new HashMap<>();
+        paraMap.put("tin","300000000740");
+
+        JsonResult jsonResult = HttpUtil.post(uri, paraMap);
+        System.out.println(JSON.toJSON(jsonResult));
     }
 }
