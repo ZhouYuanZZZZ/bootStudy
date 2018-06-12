@@ -2,8 +2,6 @@ package com.zy.study.bootstudy;
 
 import com.zy.study.bootstudy.aspect.AspectService;
 import com.zy.study.bootstudy.async.TestService;
-import com.zy.study.bootstudy.entity.City;
-import com.zy.study.bootstudy.mapper.CityMapper;
 import com.zy.study.bootstudy.utils.poi.PoiUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,8 +21,8 @@ public class BootstudyApplicationTests {
 
 	private static final Logger logger = LoggerFactory.getLogger(BootstudyApplicationTests.class);
 
-	@Resource
-	private CityMapper cityMapper;
+//	@Resource
+//	private CityMapper cityMapper;
 
 	@Resource
 	private AspectService aspectService;
@@ -32,11 +30,11 @@ public class BootstudyApplicationTests {
 	@Resource
 	private TestService testService;
 
-	@Test
-	public void contextLoads() {
-		List<City> cities = cityMapper.selectByExample(null);
-		System.out.println(cities.size() );
-	}
+//	@Test
+//	public void contextLoads() {
+//		List<City> cities = cityMapper.selectByExample(null);
+//		System.out.println(cities.size() );
+//	}
 
 	@Test
 	public void testAop01(){
@@ -65,44 +63,44 @@ public class BootstudyApplicationTests {
 		logger.info("--------------------------");
 	}
 
-	@Test
-	public void downExcel0() throws IOException {
-		List<City> cities = cityMapper.selectByExample(null);
-		long startTime = System.currentTimeMillis();
-		ByteArrayOutputStream  outputStream =  PoiUtil.exportExcel(cities, City.class);
-		long endTime = System.currentTimeMillis();
-		logger.info("time:{}",endTime-startTime);
+//	@Test
+//	public void downExcel0() throws IOException {
+//		List<City> cities = cityMapper.selectByExample(null);
+//		long startTime = System.currentTimeMillis();
+//		ByteArrayOutputStream  outputStream =  PoiUtil.exportExcel(cities, City.class);
+//		long endTime = System.currentTimeMillis();
+//		logger.info("time:{}",endTime-startTime);
+//
+//		File file = new File("C:\\Users\\zy\\Desktop\\a.xls");
+//		FileOutputStream fileOutputStream = new FileOutputStream(file);
+//
+//		fileOutputStream.write(outputStream.toByteArray());
+//		fileOutputStream.flush();
+//	}
 
-		File file = new File("C:\\Users\\zy\\Desktop\\a.xls");
-		FileOutputStream fileOutputStream = new FileOutputStream(file);
-
-		fileOutputStream.write(outputStream.toByteArray());
-		fileOutputStream.flush();
-	}
-
-	@Test
-	public void testSelectData() throws IOException {
-		List<City> cities = cityMapper.selectByExample(null);
-
-//		Example example = new Example(TbInvoice.class);
-//		Example.Criteria criteria = example.createCriteria();
-//		criteria.andEqualTo("invoiceUid",2563);
-		//List<TbInvoice> tbInvoices = tbInvoiceMapper.selectAll();
-
-		long startTime = System.currentTimeMillis();
-		//ByteArrayOutputStream  outputStream =  PoiUtil.exportExcel(tbInvoices, TbInvoice.class);
-		long endTime = System.currentTimeMillis();
-		logger.info("time:{}",endTime-startTime);
-
-		File file = new File("C:\\Users\\zy127\\Desktop\\Invoice.xls");
-		FileOutputStream fileOutputStream = new FileOutputStream(file);
-
-		//fileOutputStream.write(outputStream.toByteArray());
-		fileOutputStream.flush();
-
-		logger.info(cities.size()+"");
-		//logger.info(tbInvoices.size()+"");
-
-	}
+//	@Test
+//	public void testSelectData() throws IOException {
+//		List<City> cities = cityMapper.selectByExample(null);
+//
+////		Example example = new Example(TbInvoice.class);
+////		Example.Criteria criteria = example.createCriteria();
+////		criteria.andEqualTo("invoiceUid",2563);
+//		//List<TbInvoice> tbInvoices = tbInvoiceMapper.selectAll();
+//
+//		long startTime = System.currentTimeMillis();
+//		//ByteArrayOutputStream  outputStream =  PoiUtil.exportExcel(tbInvoices, TbInvoice.class);
+//		long endTime = System.currentTimeMillis();
+//		logger.info("time:{}",endTime-startTime);
+//
+//		File file = new File("C:\\Users\\zy127\\Desktop\\Invoice.xls");
+//		FileOutputStream fileOutputStream = new FileOutputStream(file);
+//
+//		//fileOutputStream.write(outputStream.toByteArray());
+//		fileOutputStream.flush();
+//
+//		logger.info(cities.size()+"");
+//		//logger.info(tbInvoices.size()+"");
+//
+//	}
 
 }

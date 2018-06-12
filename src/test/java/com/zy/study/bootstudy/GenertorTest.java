@@ -18,10 +18,12 @@ public class GenertorTest {
 
     @Test
     public void test0() throws IOException, XMLParserException, InvalidConfigurationException, SQLException, InterruptedException {
+
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;
         ConfigurationParser cp = new ConfigurationParser(warnings);
-        Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generator.xml"));
+        Configuration config =
+                cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generator.xml"));
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
         myBatisGenerator.generate(null);
@@ -29,4 +31,6 @@ public class GenertorTest {
             System.out.println(warning);
         }
     }
+
+
 }

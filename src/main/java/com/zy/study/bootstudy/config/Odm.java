@@ -4,10 +4,7 @@ package com.zy.study.bootstudy.config;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
 import oracle.jdbc.xa.client.OracleXADataSource;
-import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +18,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import tk.mybatis.spring.mapper.MapperScannerConfigurer;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -54,21 +52,21 @@ public class Odm implements EnvironmentAware {
         return xaDataSource;
     }
 
-    @Bean(name = "mysqlDb1")
-    public DataSource dataSource1(){
-
-        MysqlXADataSource mysqlXaDataSource = new MysqlXADataSource();
-        mysqlXaDataSource.setUrl(env.getProperty("odm.url"));
-        mysqlXaDataSource.setPinGlobalTxToPhysicalConnection(true);
-        mysqlXaDataSource.setPassword(env.getProperty("odm.password"));
-        mysqlXaDataSource.setUser(env.getProperty("odm.username"));
-
-        AtomikosDataSourceBean xaDataSource = new AtomikosDataSourceBean();
-        xaDataSource.setXaDataSource(mysqlXaDataSource);
-
-
-        return xaDataSource;
-    }
+//    @Bean(name = "mysqlDb1")
+//    public DataSource dataSource1(){
+//
+//        MysqlXADataSource mysqlXaDataSource = new MysqlXADataSource();
+//        mysqlXaDataSource.setUrl(env.getProperty("odm.url"));
+//        mysqlXaDataSource.setPinGlobalTxToPhysicalConnection(true);
+//        mysqlXaDataSource.setPassword(env.getProperty("odm.password"));
+//        mysqlXaDataSource.setUser(env.getProperty("odm.username"));
+//
+//        AtomikosDataSourceBean xaDataSource = new AtomikosDataSourceBean();
+//        xaDataSource.setXaDataSource(mysqlXaDataSource);
+//
+//
+//        return xaDataSource;
+//    }
 
 //    @Bean
 //    public DataSourceTransactionManager dataSourceTransactionManager(DataSource dataSource){
@@ -85,23 +83,23 @@ public class Odm implements EnvironmentAware {
 //
 //    }
 
-    @Bean
-    public SqlSessionFactoryBean sqlSessionFactory(@Qualifier("mysqlDb1") DataSource mysqlDb1){
-
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(mysqlDb1);
-
-        //添加XML目录
-        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        try {
-            sqlSessionFactoryBean.setConfigLocation(resolver.getResources(env.getProperty("odm.mybatisConfigLocationLocation"))[0]);
-        } catch (Exception e) {
-            logger.error(e.toString());
-            throw new RuntimeException(e);
-        }
-
-        return sqlSessionFactoryBean;
-    }
+//    @Bean
+//    public SqlSessionFactoryBean sqlSessionFactory(@Qualifier("mysqlDb1") DataSource mysqlDb1){
+//
+//        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+//        sqlSessionFactoryBean.setDataSource(mysqlDb1);
+//
+//        //添加XML目录
+//        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//        try {
+//            sqlSessionFactoryBean.setConfigLocation(resolver.getResources(env.getProperty("odm.mybatisConfigLocationLocation"))[0]);
+//        } catch (Exception e) {
+//            logger.error(e.toString());
+//            throw new RuntimeException(e);
+//        }
+//
+//        return sqlSessionFactoryBean;
+//    }
 
     @Bean
     public SqlSessionFactoryBean sqlSessionFactory1(@Qualifier("oracleDb1") DataSource oracleDb1){
@@ -121,21 +119,21 @@ public class Odm implements EnvironmentAware {
         return sqlSessionFactoryBean;
     }
 
+//    @Bean
+//    public MapperScannerConfigurer mapperScannerConfigurer(){
+//
+//        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+//        //扫描Mapper配置文件与接口的包名
+//        mapperScannerConfigurer.setBasePackage(env.getProperty("odm.mapperScannerConfigurerBasePackage"));
+//        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
+//
+//        return mapperScannerConfigurer;
+//    }
+
     @Bean
-    public MapperScannerConfigurer mapperScannerConfigurer(){
+    public MapperScannerConfigurer mapperScannerConfigurer1(){
 
-        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        //扫描Mapper配置文件与接口的包名
-        mapperScannerConfigurer.setBasePackage(env.getProperty("odm.mapperScannerConfigurerBasePackage"));
-        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-
-        return mapperScannerConfigurer;
-    }
-
-    @Bean
-    public tk.mybatis.spring.mapper.MapperScannerConfigurer  mapperScannerConfigurer1(){
-
-        tk.mybatis.spring.mapper.MapperScannerConfigurer mapperScannerConfigurer = new tk.mybatis.spring.mapper.MapperScannerConfigurer();
+        MapperScannerConfigurer mapperScannerConfigurer = new tk.mybatis.spring.mapper.MapperScannerConfigurer();
         //扫描Mapper配置文件与接口的包名
         mapperScannerConfigurer.setBasePackage(env.getProperty("odm1.mapperScannerConfigurerBasePackage"));
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory1");

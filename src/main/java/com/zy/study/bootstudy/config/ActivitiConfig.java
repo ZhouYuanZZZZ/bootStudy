@@ -12,7 +12,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
-@Configuration
+
 public class ActivitiConfig {
 
     @Resource
