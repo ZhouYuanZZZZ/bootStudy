@@ -4,55 +4,78 @@
 
 <!--suppress MybatisGenerateCustomPluginInspection -->
 <generatorConfiguration>
-    <context id="oracle" targetRuntime="MyBatis3Simple" defaultModelType="flat">
-        <property name="javaFileEncoding" value="UTF-8"/>
-        <property name="useMapperCommentGenerator" value="false"/>
+    <context id="testTables" targetRuntime="MyBatis3">
 
-        <!--<plugin type="tk.mybatis.mapper.generator.MapperPlugin">-->
-            <!--<property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>-->
-            <!--<property name="caseSensitive" value="true"/>-->
-            <!--<property name="forceAnnotation" value="true"/>-->
-            <!--<property name="beginningDelimiter" value=""/>-->
-            <!--<property name="endingDelimiter" value=""/>-->
-        <!--</plugin>-->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="forceAnnotation" value="true"/>
+            <property name="beginningDelimiter" value=""/>
+            <property name="endingDelimiter" value=""/>
+        </plugin>
 
         <commentGenerator>
-            <property name="suppressAllComments" value="true"/>
-            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
         </commentGenerator>
-
-        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
-                        connectionURL="jdbc:oracle:thin:@//192.168.1.141:1521/cssca.com"
-                        userId="tcsdev1"
-                        password="tcsdev1">
-        </jdbcConnection>
-
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
-                        <!--connectionURL="jdbc:mysql://192.168.1.142:3306/zy?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"-->
+                        <!--connectionURL="jdbc:mysql://localhost:3306/mybatis?characterEncoding=utf-8"-->
                         <!--userId="root"-->
                         <!--password="root">-->
         <!--</jdbcConnection>-->
+         <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+            connectionURL="jdbc:oracle:thin:@//192.168.1.141:1521/cssca.com"
+            userId="tcsdev1"
+            password="tcsdev1">
+        </jdbcConnection>
 
-        <!--MyBatis 生成器只需要生成 Model-->
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+            NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true" />
+        </javaTypeResolver>
+
+        <!-- targetProject:生成PO类的位置 -->
         <javaModelGenerator targetPackage="com.zy.study.bootstudy.entity1"
-                            targetProject="src/main/java/"/>
+                            targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
 
+        <!-- targetProject:mapper映射文件生成的位置 -->
         <sqlMapGenerator targetPackage="com.zy.study.bootstudy.mapper1"
-                         targetProject="src/main/resources/"/>
+                         targetProject="src/main/resources">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+        
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.zy.study.bootstudy.mapper1"
+                             targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
 
-        <javaClientGenerator targetPackage="com.zy.study.bootstudy.mapper1"
-                             targetProject="src/main/java/"
-                             type="XMLMAPPER"/>
 
-        <!--<table tableName="city">-->
-            <!--&lt;!&ndash;<generatedKey column="ID" sqlStatement="Mysql" identity="true" type="pre"/>&ndash;&gt;-->
-        <!--</table>-->
+        <!-- <table schema="" tableName="sys_user"></table>
+        <table schema="" tableName="sys_role"></table>
+        <table schema="" tableName="sys_permission"></table>
+        <table schema="" tableName="sys_user_role"></table>
+        <table schema="" tableName="sys_role_permission"></table> -->
 
-        <table tableName="TB_INVOICE">
-        <generatedKey column="INVOICE_UID"
-                      sqlStatement="select SEQ_{1}.nextval from dual"
-                      identity="false" type="pre"/>
+        <!-- 有些表的字段需要指定java类型
+         <table schema="" tableName="">
+            <columnOverride column="" javaType="" />
+        </table> -->
+        <table  tableName="TB_INVOICE">
+            <generatedKey column="INVOICE_UID"
+                          sqlStatement="select SEQ_{1}.nextval from dual"
+                          identity="false" type="pre"/>
         </table>
-
     </context>
+
 </generatorConfiguration>
