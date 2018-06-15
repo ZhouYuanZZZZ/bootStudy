@@ -71,9 +71,16 @@
          <table schema="" tableName="">
             <columnOverride column="" javaType="" />
         </table> -->
-        <table  tableName="TB_INVOICE">
-            <generatedKey column="INVOICE_UID"
-                          sqlStatement="select SEQ_{1}.nextval from dual"
+        <table  tableName="TB_DEVICE"
+
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                selectByExampleQueryId="false">
+
+            <generatedKey column="DEVICE_UID"
+                          sqlStatement="select SEQ_TB_DEVICE.nextval from dual"
                           identity="false" type="pre"/>
         </table>
     </context>

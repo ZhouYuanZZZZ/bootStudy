@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.study.bootstudy.mapper1.TbInvoiceMapper">
+  <resultMap id="BaseResultMap" type="com.zy.study.bootstudy.entity1.TbInvoice">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="INVOICE_UID" jdbcType="DECIMAL" property="invoiceUid" />
+    <result column="INVOICE_NO" jdbcType="VARCHAR" property="invoiceNo" />
+    <result column="INVOICE_SHORT_CODE" jdbcType="VARCHAR" property="invoiceShortCode" />
+    <result column="TAXPAYER_UID" jdbcType="DECIMAL" property="taxpayerUid" />
+    <result column="DEVICE_UID" jdbcType="DECIMAL" property="deviceUid" />
+    <result column="INVOICE_MADE_BY" jdbcType="VARCHAR" property="invoiceMadeBy" />
+    <result column="INVOICE_FROM" jdbcType="VARCHAR" property="invoiceFrom" />
+    <result column="INVOICE_TYPE_UID" jdbcType="DECIMAL" property="invoiceTypeUid" />
+    <result column="INVOICE_TYPE_CODE" jdbcType="VARCHAR" property="invoiceTypeCode" />
+    <result column="INVOICE_TYPE_NAME" jdbcType="VARCHAR" property="invoiceTypeName" />
+    <result column="DRAWER_NAME" jdbcType="VARCHAR" property="drawerName" />
+    <result column="CLIENT_INVOICE_DATETIME" jdbcType="TIMESTAMP" property="clientInvoiceDatetime" />
+    <result column="PURCHASER_TIN" jdbcType="VARCHAR" property="purchaserTin" />
+    <result column="PURCHASER_NAME" jdbcType="VARCHAR" property="purchaserName" />
+    <result column="PURCHASER_ADDRESS" jdbcType="VARCHAR" property="purchaserAddress" />
+    <result column="PURCHASER_PHONE" jdbcType="VARCHAR" property="purchaserPhone" />
+    <result column="PURCHASER_ID_TYPE" jdbcType="VARCHAR" property="purchaserIdType" />
+    <result column="PURCHASER_ID_NUMBER" jdbcType="VARCHAR" property="purchaserIdNumber" />
+    <result column="SELLER_TIN" jdbcType="VARCHAR" property="sellerTin" />
+    <result column="SELLER_NAME" jdbcType="VARCHAR" property="sellerName" />
+    <result column="SELLER_ADDRESS" jdbcType="VARCHAR" property="sellerAddress" />
+    <result column="SELLER_PHONE" jdbcType="VARCHAR" property="sellerPhone" />
+    <result column="SELLER_BRANCH_ADDR" jdbcType="VARCHAR" property="sellerBranchAddr" />
+    <result column="IS_LOCAL_CURRENCY" jdbcType="VARCHAR" property="isLocalCurrency" />
+    <result column="CURRENCY_CODE" jdbcType="VARCHAR" property="currencyCode" />
+    <result column="EXCHANGE_RATE" jdbcType="DECIMAL" property="exchangeRate" />
+    <result column="TOTAL_FINAL" jdbcType="DECIMAL" property="totalFinal" />
+    <result column="TOTAL_VAT" jdbcType="DECIMAL" property="totalVat" />
+    <result column="TOTAL_STAMP" jdbcType="DECIMAL" property="totalStamp" />
+    <result column="TOTAL_BPT" jdbcType="DECIMAL" property="totalBpt" />
+    <result column="TOTAL_TAX1" jdbcType="DECIMAL" property="totalTax1" />
+    <result column="TOTAL_TAX2" jdbcType="DECIMAL" property="totalTax2" />
+    <result column="TOTAL_TAX3" jdbcType="DECIMAL" property="totalTax3" />
+    <result column="TOTAL_TAX4" jdbcType="DECIMAL" property="totalTax4" />
+    <result column="TOTAL_TAX5" jdbcType="DECIMAL" property="totalTax5" />
+    <result column="TOTAL_TAXABLE_AMOUNT_ORG" jdbcType="DECIMAL" property="totalTaxableAmountOrg" />
+    <result column="TOTAL_TAXABLE_AMOUNT" jdbcType="DECIMAL" property="totalTaxableAmount" />
+    <result column="TOTAL_TAX_DUE" jdbcType="DECIMAL" property="totalTaxDue" />
+    <result column="TOTAL_ALL" jdbcType="DECIMAL" property="totalAll" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="NEGATIVE_FLAG" jdbcType="VARCHAR" property="negativeFlag" />
+    <result column="DEDUCTION_STATUS" jdbcType="VARCHAR" property="deductionStatus" />
+    <result column="APPLIED_NEGATIVE_TOTAL_AMOUNT" jdbcType="DECIMAL" property="appliedNegativeTotalAmount" />
+    <result column="ORG_INVOICE_UID" jdbcType="DECIMAL" property="orgInvoiceUid" />
+    <result column="NEGATIVE_APPRIVAL_USER_ID" jdbcType="VARCHAR" property="negativeApprivalUserId" />
+    <result column="NEGATIVE_APPROVAL_REMARK" jdbcType="VARCHAR" property="negativeApprovalRemark" />
+    <result column="NEGATIVE_APPROVAL_DATETIME" jdbcType="TIMESTAMP" property="negativeApprovalDatetime" />
+    <result column="INVALID_FLAG" jdbcType="VARCHAR" property="invalidFlag" />
+    <result column="INVALID_DATETIME" jdbcType="TIMESTAMP" property="invalidDatetime" />
+    <result column="INVALID_USER_UID" jdbcType="VARCHAR" property="invalidUserUid" />
+    <result column="INVALID_REMARK" jdbcType="VARCHAR" property="invalidRemark" />
+    <result column="IS_RAFFLED" jdbcType="VARCHAR" property="isRaffled" />
+    <result column="IS_LUCKY" jdbcType="VARCHAR" property="isLucky" />
+    <result column="CASH_DATE" jdbcType="TIMESTAMP" property="cashDate" />
+    <result column="IS_UPLOADED" jdbcType="VARCHAR" property="isUploaded" />
+    <result column="PRINT_FLAG" jdbcType="VARCHAR" property="printFlag" />
+    <result column="IS_DEDUCTABLE" jdbcType="VARCHAR" property="isDeductable" />
+    <result column="CRT_DATETIME" jdbcType="TIMESTAMP" property="crtDatetime" />
+    <result column="IS_EINVOICE" jdbcType="VARCHAR" property="isEinvoice" />
+    <result column="INVOICE_PROCESS_STATUS" jdbcType="VARCHAR" property="invoiceProcessStatus" />
+    <result column="INVOICE_REQUEST_TYPE" jdbcType="VARCHAR" property="invoiceRequestType" />
+  </resultMap>
+
+  <select id="queryInvoiceWithTaxpayerInfo" resultMap="tbInvoiceTaxpayerResultMap">
+    select * from TB_INVOICE
+  </select>
+  <resultMap id="tbInvoiceTaxpayerResultMap" type="com.zy.study.bootstudy.entity1.TbInvoiceTaxpayerInfo">
+
+    <result column="INVOICE_NO" jdbcType="VARCHAR" property="invoiceNo"/>
+
+    <association property="taxpayer"
+                 column="SELLER_TIN"
+                 javaType="com.zy.study.bootstudy.entity1.TbTaxpayer"
+                 select="com.zy.study.bootstudy.mapper1.TbTaxpayerMapper.queryTaxpayerByTin"></association>
+
+    <association property="taxpayerName"
+                 column="SELLER_TIN"
+                 javaType="string"
+                 select="com.zy.study.bootstudy.mapper1.TbTaxpayerMapper.queryTaxpayerNameByTin"></association>
+  </resultMap>
+
+  <select id="queryInvoiceWithTaxpayerInfo1" resultMap="tbInvoiceTaxpayerResultMap1">
+    SELECT
+      TB_TAXPAYER.*,
+      TB_INVOICE.INVOICE_NO
+      FROM TB_TAXPAYER
+      INNER JOIN TB_INVOICE ON TB_TAXPAYER.TAXPAYER_UID = TB_INVOICE.TAXPAYER_UID
+  </select>
+  <resultMap id="tbInvoiceTaxpayerResultMap1" type="com.zy.study.bootstudy.entity1.TbInvoiceTaxpayerInfo">
+
+    <result column="INVOICE_NO" jdbcType="VARCHAR" property="invoiceNo"/>
+    <result column="NAME_IN_ENGLISH" jdbcType="VARCHAR" property="taxpayerName"/>
+
+    <association property="taxpayer"
+                 column="TAXPAYER_UID"
+                 javaType="com.zy.study.bootstudy.entity1.TbTaxpayer"
+                 resultMap="com.zy.study.bootstudy.mapper1.TbTaxpayerMapper.BaseResultMap"></association>
+  </resultMap>
+
+  <select id="queryInvoiceByDeviceSn" resultMap="BaseResultMap" parameterType="string">
+    select * from TB_INVOICE
+     where DEVICE_SN = #{sn}
+  </select>
+
+
+
+</mapper>
