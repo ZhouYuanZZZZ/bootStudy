@@ -223,8 +223,12 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.5</version>
 		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
 
-		<!--去掉springboot本身日志依赖-->
+        <!--去掉springboot本身日志依赖-->
 		<!--<dependency>-->
 			<!--<groupId>org.springframework.boot</groupId>-->
 			<!--<artifactId>spring-boot-starter</artifactId>-->
