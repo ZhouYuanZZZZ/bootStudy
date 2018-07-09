@@ -39,14 +39,14 @@ public class Odm implements EnvironmentAware {
     @Bean(name = "oracleDb1")
     public DataSource oracleDb1() throws SQLException {
 
-        OracleXADataSource mysqlXaDataSource = new OracleXADataSource();
+        OracleXADataSource oracleXADataSource = new OracleXADataSource();
 
-        mysqlXaDataSource.setURL(env.getProperty("odm1.url"));
-        mysqlXaDataSource.setPassword(env.getProperty("odm1.username"));
-        mysqlXaDataSource.setUser(env.getProperty("odm1.username"));
+        oracleXADataSource.setURL(env.getProperty("odm1.url"));
+        oracleXADataSource.setPassword(env.getProperty("odm1.username"));
+        oracleXADataSource.setUser(env.getProperty("odm1.username"));
 
         AtomikosDataSourceBean xaDataSource = new AtomikosDataSourceBean();
-        xaDataSource.setXaDataSource(mysqlXaDataSource);
+        xaDataSource.setXaDataSource(oracleXADataSource);
 
 
         return xaDataSource;

@@ -26,7 +26,8 @@ public class PoiUtil {
 
     private static SimpleDateFormat dateFormat = DateUtil.getDataTimeDateFormat();
 
-    public static <T> ByteArrayOutputStream exportExcel(List<T> models, Class<T> clazz) {
+    public static <T> ByteArrayOutputStream exportExcel(List<T> models,
+                                                        Class<T> clazz) {
 
         try {
             if (!clazz.isAnnotationPresent(ModelTitle.class)) {
