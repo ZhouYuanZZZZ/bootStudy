@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Welcome!</title>
-<#include "/common/head.ftl"/>
+<#include "common/head.ftl"/>
 
 </head>
 <body>
